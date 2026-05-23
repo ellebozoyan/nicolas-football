@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+<title>Nicolas's Football</title>
+
+<!-- PWA - Installable app on iPad / iPhone home screen -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Football" />
+<meta name="theme-color" content="#2d4a1b" />
+<meta name="format-detection" content="telephone=no" />
+
+<!-- App icons (inline SVG, base64-encoded so no separate files needed) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM3ZmIwNjkiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyZDRhMmIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiByeT0iNDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSI1MCIgZmlsbD0iI2Q0ZGQyYiIvPjxwYXRoIGQ9Ik00MCA5MCBRIDkwIDQwIDE0MCA5MCIgc3Ryb2tlPSIjZmFmNmU5IiBzdHJva2Utd2lkdGg9IjMuNSIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik00MCA5MCBRIDkwIDE0MCAxNDAgOTAiIHN0cm9rZT0iI2ZhZjZlOSIgc3Ryb2tlLXdpZHRoPSIzLjUiIGZpbGw9Im5vbmUiLz48L3N2Zz4=" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM3ZmIwNjkiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyZDRhMmIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiByeT0iNDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSI1MCIgZmlsbD0iI2Q0ZGQyYiIvPjxwYXRoIGQ9Ik00MCA5MCBRIDkwIDQwIDE0MCA5MCIgc3Ryb2tlPSIjZmFmNmU5IiBzdHJva2Utd2lkdGg9IjMuNSIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik00MCA5MCBRIDkwIDE0MCAxNDAgOTAiIHN0cm9rZT0iI2ZhZjZlOSIgc3Ryb2tlLXdpZHRoPSIzLjUiIGZpbGw9Im5vbmUiLz48L3N2Zz4=" />
+<link rel="manifest" href="manifest.json" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #f8f4ea;
+    --cream-deep: #f3edd8;
+    --grass: #4a7c2c;
+    --grass-deep: #2d4a1b;
+    --whistle: #f5d547;
+    --goal-red: #c73e3a;
+    --clay-deep: #b85528;
+    --net-white: #ffffff;
+    --line-white: #fdfaf2;
+    --shadow-warm: rgba(45, 74, 43, 0.12);
+    --ink: #2d4a1b;
+    --ink-soft: #4a6446;
+    --highlight: #ffd966;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth; -webkit-text-size-adjust: 100%;}
+  body{
+    font-family:'Plus Jakarta Sans', -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 17px;
+    background-image: 
+      radial-gradient(circle at 20% 10%, rgba(245,213,71,0.08), transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(199,62,58,0.06), transparent 40%);
+    min-height: 100vh;
+    /* iOS safe-area for installed PWA */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  /* Allow text selection in inputs etc */
+  input, textarea {-webkit-user-select: text; user-select: text;}
+
+  /* IN-APP VIDEO PLAYER OVERLAY */
+  #video-overlay{
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 10000;
+    display: none;
+    flex-direction: column;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  #video-overlay.show{display: flex;}
+  #video-overlay-bar{
+    background: var(--grass-deep);
+    color: var(--cream);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  #video-overlay-back{
+    background: var(--whistle);
+    color: var(--grass-deep);
+    border: none;
+    padding: 0.7rem 1.4rem;
+    border-radius: 999px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  #video-overlay-back:active{transform: scale(0.97);}
+  #video-overlay-title{
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+    margin: 0 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #video-overlay-frame-wrap{
+    flex: 1;
+    background: #000;
+    position: relative;
+  }
+  #video-overlay-frame{
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces', Georgia, serif; color: var(--ink); line-height:1.15;}
+  h1{font-size:clamp(2.2rem, 5vw, 3.6rem); font-weight:800; letter-spacing:-0.02em;}
+  h2{font-size:clamp(1.6rem, 3.5vw, 2.4rem); font-weight:700; letter-spacing:-0.015em;}
+  h3{font-size:clamp(1.2rem, 2.5vw, 1.5rem); font-weight:700;}
+  h4{font-size:1.05rem; font-weight:700; color: var(--grass-deep);}
+  p{margin: 0 0 0.85em 0;}
+  a{color: var(--goal-red-deep); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px;}
+  a:hover{color: var(--grass-deep);}
+
+  /* HEADER */
+  .top-banner{
+    background: linear-gradient(135deg, var(--grass) 0%, var(--grass-deep) 100%);
+    color: var(--cream);
+    padding: 2.2rem 1.5rem 2.2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .top-banner::before{
+    content: '';
+    position:absolute; inset:0;
+    background-image: 
+      repeating-linear-gradient(45deg, transparent, transparent 18px, rgba(255,255,255,0.025) 18px, rgba(255,255,255,0.025) 19px);
+    pointer-events:none;
+  }
+  .top-banner h1{color: var(--cream); font-style: italic;}
+  .top-banner .sub{
+    font-family:'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-top: 0.4rem;
+    opacity: 0.88;
+  }
+  .ball-icon{
+    display:inline-block;
+    width: 1.1em; height: 1.1em;
+    background: var(--whistle);
+    border-radius: 50%;
+    vertical-align: middle;
+    box-shadow: inset -3px -3px 8px rgba(45,74,43,0.25);
+    position: relative;
+  }
+  .ball-icon::before, .ball-icon::after{
+    content:''; position:absolute;
+    border: 1.5px solid var(--cream);
+    border-radius: 50%;
+    inset: 0;
+    border-color: transparent var(--cream) transparent var(--cream);
+    transform: rotate(-15deg);
+  }
+
+  /* TAB NAV */
+  .tabs{
+    position: sticky;
+    top: 0;
+    background: var(--cream);
+    border-bottom: 2px solid var(--cream-deep);
+    box-shadow: 0 2px 12px var(--shadow-warm);
+    z-index: 100;
+    padding: 0.75rem;
+  }
+  .tab-list{
+    display: flex;
+    gap: 0.4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 4px;
+  }
+  .tab-list::-webkit-scrollbar{height:4px}
+  .tab-list::-webkit-scrollbar-thumb{background:var(--grass);border-radius:2px}
+  .tab-btn{
+    flex: 0 0 auto;
+    background: var(--cream-deep);
+    color: var(--ink);
+    border: 2px solid transparent;
+    padding: 0.65rem 1.1rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-height: 44px;
+  }
+  .tab-btn:hover{background: var(--whistle);}
+  .tab-btn.active{
+    background: var(--grass-deep);
+    color: var(--whistle);
+    border-color: var(--grass-deep);
+  }
+
+  /* MAIN CONTENT */
+  main{max-width: 1200px; margin: 0 auto; padding: 2rem 1.25rem 4rem;}
+  .panel{display:none; animation: fadeIn 0.4s ease;}
+  .panel.active{display:block;}
+  @keyframes fadeIn{
+    from{opacity:0; transform:translateY(8px)}
+    to{opacity:1; transform:translateY(0)}
+  }
+
+  .section-intro{
+    background: var(--cream-deep);
+    border-left: 6px solid var(--goal-red);
+    padding: 1.4rem 1.6rem;
+    border-radius: 0 14px 14px 0;
+    margin-bottom: 2rem;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+  }
+
+  /* CARDS */
+  .card-grid{
+    display: grid;
+    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  .card{
+    background: var(--net-white);
+    border: 2px solid var(--cream-deep);
+    border-radius: 18px;
+    padding: 1.4rem;
+    box-shadow: 0 4px 16px var(--shadow-warm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover{transform: translateY(-2px); box-shadow: 0 8px 24px var(--shadow-warm);}
+  .card-icon{
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--whistle), #b8c425);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 3px 8px rgba(184,196,37,0.4);
+  }
+  .card h3{margin-bottom: 0.5rem;}
+  .card .summary{
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+    margin: 0.6rem 0 0.9rem;
+  }
+  .card .video-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--goal-red);
+    color: var(--cream);
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .card .video-link:hover{background: var(--goal-red-deep); color: var(--cream);}
+
+  /* COURT SVG WRAPPER */
+  .court-wrap{
+    background: var(--net-white);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 16px var(--shadow-warm);
+  }
+  .court-wrap svg{width:100%; height:auto; max-height:420px; display:block;}
+  .court-legend{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.7rem;
+    margin-top: 1.2rem;
+  }
+  .legend-item{
+    background: var(--cream-deep);
+    padding: 0.7rem 0.9rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+  }
+  .legend-item strong{color: var(--grass-deep); display:block; margin-bottom:0.15rem;}
+
+  /* WEEK CARDS */
+  .quarter{
+    background: var(--cream-deep);
+    border-radius: 18px;
+    padding: 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .quarter-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+  }
+  .quarter-tag{
+    background: var(--grass-deep);
+    color: var(--whistle);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .week-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0.7rem;
+  }
+  .week-card{
+    background: var(--net-white);
+    padding: 0.95rem 1.1rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--grass);
+    transition: transform 0.15s;
+  }
+  .week-card:hover{transform: translateX(3px);}
+  .week-card .wk-num{
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    color: var(--goal-red);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .week-card h4{margin: 0.15rem 0 0.4rem;}
+  .week-card p{font-size: 0.9rem; color: var(--ink-soft); margin: 0;}
+
+  /* SOCIAL STORY */
+  .story-book{
+    background: var(--net-white);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 6px 24px var(--shadow-warm);
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .story-page{
+    background: var(--cream-deep);
+    border-radius: 16px;
+    padding: 1.8rem 1.6rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  .story-page .emoji{
+    font-size: 2.8rem;
+    flex-shrink: 0;
+    background: var(--whistle);
+    width: 78px; height: 78px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 3px 10px rgba(184,196,37,0.4);
+  }
+  .story-page .text{
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .story-num{
+    color: var(--goal-red);
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* RESOURCES */
+  .resource-block{
+    background: var(--net-white);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+    border: 2px solid var(--cream-deep);
+  }
+  .resource-block h3{
+    color: var(--goal-red-deep);
+    margin-bottom: 0.5rem;
+  }
+  .resource-block ul{margin: 0.5rem 0 0 1.2rem; padding: 0;}
+  .resource-block li{margin-bottom: 0.5rem;}
+
+  /* HIGHLIGHT BOX */
+  .pull-quote{
+    background: var(--grass-deep);
+    color: var(--cream);
+    padding: 1.6rem 1.8rem;
+    border-radius: 18px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  .pull-quote::before{
+    content: '"';
+    font-size: 3rem;
+    line-height: 0.5;
+    vertical-align: -0.3em;
+    color: var(--whistle);
+  }
+  .pull-quote::after{
+    content: '"';
+    font-size: 3rem;
+    line-height: 0;
+    vertical-align: -0.5em;
+    color: var(--whistle);
+  }
+
+  /* Equipment cards */
+  .equip-row{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .equip-item{
+    background: var(--cream-deep);
+    border-radius: 14px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .equip-circle{
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    margin: 0 auto 0.5rem;
+    box-shadow: inset -4px -4px 10px rgba(0,0,0,0.18);
+    position: relative;
+  }
+  .equip-circle::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius:50%;
+    border-color: transparent rgba(255,255,255,0.6) transparent rgba(255,255,255,0.6);
+  }
+  .ball-red{background: linear-gradient(135deg, #d44a3a, #a83523);}
+  .ball-orange{background: linear-gradient(135deg, #e08838, #b8651f);}
+  .ball-green{background: linear-gradient(135deg, #6fa84d, #4f8a3d);}
+  .ball-yellow{background: linear-gradient(135deg, #f5d547, #a8b020);}
+
+  /* FORMAT CARDS */
+  .format-card{
+    background: var(--net-white);
+    border-radius: 22px;
+    padding: 1.6rem;
+    margin-bottom: 1.4rem;
+    box-shadow: 0 6px 20px var(--shadow-warm);
+    border-top: 8px solid;
+  }
+  .format-A{border-top-color: var(--grass);}
+  .format-B{border-top-color: var(--whistle);}
+  .format-C{border-top-color: var(--goal-red);}
+  .format-D{border-top-color: #6b4f8f;}
+  .format-tag{
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .tag-A{background: var(--grass); color: var(--cream);}
+  .tag-B{background: var(--whistle); color: var(--grass-deep);}
+  .tag-C{background: var(--goal-red); color: var(--cream);}
+  .tag-D{background: #6b4f8f; color: var(--cream);}
+  .format-when{
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin: 0.3rem 0 1rem;
+  }
+  .format-versions{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  @media (min-width: 720px){
+    .format-versions{grid-template-columns: 1.2fr 1fr;}
+  }
+  .version-block{
+    background: var(--cream-deep);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+  }
+  .version-block h4{
+    color: var(--grass-deep);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .version-block h4 .duration{
+    font-size: 0.78rem;
+    background: var(--grass-deep);
+    color: var(--whistle);
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .block-list{list-style: none; padding: 0; margin: 0;}
+  .block-list li{
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed rgba(45,74,43,0.15);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    font-size: 0.93rem;
+  }
+  .block-list li:last-child{border-bottom: none;}
+  .block-list .blk-time{
+    flex-shrink: 0;
+    background: var(--net-white);
+    color: var(--grass-deep);
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    min-width: 52px;
+    text-align: center;
+  }
+  .block-list .blk-name{font-weight: 600; display: block;}
+  .block-list .blk-desc{color: var(--ink-soft); font-size: 0.86rem; display: block;}
+
+  /* PHASE BANNER */
+  .phase{
+    background: linear-gradient(135deg, var(--grass-deep) 0%, var(--grass) 100%);
+    color: var(--cream);
+    padding: 1.4rem 1.6rem;
+    border-radius: 18px;
+    margin: 2rem 0 1.2rem;
+  }
+  .phase h3{color: var(--cream); margin-bottom: 0.3rem;}
+  .phase .phase-meta{
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.6rem;
+  }
+  .phase-chip{
+    background: rgba(255,255,255,0.18);
+    color: var(--cream);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .phase p{color: rgba(250,246,233,0.92); margin: 0.5rem 0 0;}
+
+  /* WEEK ROW with format colors */
+  .week-row{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+  }
+  .week-row .week-card{border-left-width: 5px;}
+  .week-card.fmt-A{border-left-color: var(--grass);}
+  .week-card.fmt-B{border-left-color: var(--whistle);}
+  .week-card.fmt-C{border-left-color: var(--goal-red);}
+  .week-card.fmt-D{border-left-color: #6b4f8f;}
+  .fmt-pill{
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.12rem 0.5rem;
+    border-radius: 4px;
+    margin-left: 0.45rem;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+  }
+  .fmt-pill.A{background: var(--grass); color: var(--cream);}
+  .fmt-pill.B{background: var(--whistle); color: var(--grass-deep);}
+  .fmt-pill.C{background: var(--goal-red); color: var(--cream);}
+  .fmt-pill.D{background: #6b4f8f; color: var(--cream);}
+
+  /* WARM-UP MENU */
+  .warmup-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.7rem;
+  }
+  .warmup-item{
+    background: var(--cream-deep);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--goal-red);
+  }
+  .warmup-item h4{font-size: 0.95rem; margin-bottom: 0.2rem;}
+  .warmup-item p{font-size: 0.85rem; color: var(--ink-soft); margin: 0;}
+
+  /* INLINE WEEKLY VIDEO LINK */
+  .wk-vid{
+    display: inline-block;
+    margin-top: 0.4rem;
+    color: var(--goal-red-deep);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    background: var(--cream-deep);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--goal-red);
+  }
+  .wk-vid:hover{
+    background: var(--goal-red);
+    color: var(--cream);
+  }
+
+  /* Card video link for games */
+  .game-vid{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.6rem;
+    background: transparent;
+    color: var(--goal-red-deep);
+    padding: 0.3rem 0.7rem;
+    border: 1.5px solid var(--goal-red);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .game-vid:hover{background: var(--goal-red); color: var(--cream);}
+
+  /* SONG CARDS */
+  .song-card{
+    background: linear-gradient(135deg, #fffaeb, var(--cream));
+    border: 2px solid var(--cream-deep);
+    position: relative;
+    overflow: hidden;
+  }
+  .song-card::before{
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, rgba(245,213,71,0.3), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .song-card .song-id{
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    font-family: 'Courier New', monospace;
+    margin-top: 0.5rem;
+    opacity: 0.65;
+  }
+  .play-button{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: linear-gradient(135deg, var(--grass), var(--grass-deep));
+    color: var(--cream);
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 0.8rem;
+    box-shadow: 0 3px 10px rgba(45,74,43,0.25);
+    transition: transform 0.15s;
+  }
+  .play-button:hover{
+    transform: translateY(-2px);
+    color: var(--whistle);
+    box-shadow: 0 5px 14px rgba(45,74,43,0.35);
+  }
+  .play-button .icon{
+    font-size: 1.05rem;
+    background: var(--whistle);
+    color: var(--grass-deep);
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .song-add{
+    background: var(--cream-deep);
+    border: 2.5px dashed var(--grass);
+    border-radius: 18px;
+    padding: 1.4rem;
+    text-align: center;
+  }
+  .song-add .card-icon{
+    background: linear-gradient(135deg, var(--cream), var(--cream-deep)) !important;
+    color: var(--grass-deep);
+    border: 2px dashed var(--grass);
+  }
+  .song-add ol{
+    text-align: left;
+    margin: 0.8rem 0 0 1.2rem;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  .song-add ol li{margin-bottom: 0.3rem;}
+
+  .song-uses{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+  .song-use{
+    background: var(--net-white);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--whistle);
+  }
+  .song-use h4{
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+    color: var(--grass-deep);
+  }
+  .song-use p{
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* CUE CHIP — for cards (skills, rules, court, games, etc.) */
+  .cue{
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--grass-deep);
+    margin-top: 0.65rem;
+    padding: 0.4rem 0.75rem;
+    background: rgba(212, 221, 43, 0.22);
+    border-left: 3px solid var(--whistle);
+    border-radius: 0 8px 8px 0;
+    line-height: 1.35;
+  }
+  .cue::before{
+    content: '💬';
+    margin-right: 0.4rem;
+    font-style: normal;
+  }
+  /* Tighter cue for legend items and warmup items */
+  .legend-item .cue, .warmup-item .cue{
+    font-size: 0.84rem;
+    margin-top: 0.4rem;
+    padding: 0.3rem 0.6rem;
+  }
+  /* Block cue inside lesson format lists */
+  .blk-cue{
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--goal-red-deep);
+    margin-top: 0.25rem;
+  }
+  .blk-cue::before{
+    content: '💬 ';
+    font-style: normal;
+  }
+
+  /* Print friendly */
+  @media print{
+    .tabs{display:none}
+    .panel{display:block !important; page-break-after: always;}
+    body{background: white;}
+  }
+
+  @media (max-width: 640px){
+    main{padding: 1.25rem 0.85rem 3rem;}
+    .top-banner{padding: 1.5rem 1rem;}
+    .story-page{flex-direction:column; text-align:center; padding: 1.4rem 1.1rem;}
+    .story-page .text{font-size: 1.1rem;}
+  }
+
+  /* Court SVG specific */
+  .court-svg .court-bg{fill: #4a7c2c;}
+  .court-svg .court-line{stroke: var(--line-white); stroke-width: 3; fill: none;}
+  .court-svg .net{stroke: #2d2d2d; stroke-width: 4;}
+  .court-svg .label{
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    fill: var(--cream);
+  }
+  .court-svg .label-dark{
+    fill: var(--grass-deep);
+    font-weight: 700;
+  }
+  .court-svg .arrow{stroke: var(--goal-red-deep); stroke-width: 2; fill: none; marker-end: url(#arrowhead);}
+
+/* In-app Suno song manager */
+.user-songs-section { margin: 1rem 0 1.5rem; }
+.add-song-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.85rem 1.6rem;
+  background: linear-gradient(135deg, #4a7c2c, #2d4a1b);
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  text-decoration: none;
+}
+.add-song-btn:hover { transform: translateY(-1px); }
+.add-song-btn:active { transform: translateY(1px); }
+.user-songs-empty {
+  margin-top: 0.7rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+.song-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+.song-modal-overlay[hidden] { display: none !important; }
+.song-modal-box {
+  background: var(--cream, #f8f4ea);
+  padding: 1.5rem;
+  border-radius: 18px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
+.song-modal-box h3 { margin: 0 0 1rem; }
+.song-modal-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0.6rem 0 0.3rem;
+  color: var(--ink-soft, #555);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.song-modal-box input {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 2px solid var(--cream-deep, #ddd);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background: #fff;
+}
+.song-modal-box input:focus {
+  outline: none;
+  border-color: #888;
+}
+.song-modal-hint {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin: 0.3rem 0 0;
+}
+.song-modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1.3rem;
+}
+.song-modal-btn {
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+.song-modal-btn.cancel { background: var(--cream-deep, #eee); color: var(--ink, #333); }
+.song-modal-btn.save  { background: linear-gradient(135deg, #4a7c2c, #2d4a1b); color: #fff; }
+.song-card-remove {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.78rem;
+  background: none;
+  border: none;
+  color: var(--ink-soft, #888);
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: inherit;
+  padding: 0;
+}
+.song-card-remove:hover { color: #c73e3a; }
+
+</style>
+</head>
+<body>
+
+<header class="top-banner">
+  <h1>Nicolas's Football Playbook <span class="ball-icon"></span></h1>
+  <p class="sub">A picture guide to the rules, the field, the strokes, and the joy of the game.</p>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="tab-list" role="tablist">
+    <button class="tab-btn active" data-tab="welcome">🏁 Start Here</button>
+    <button class="tab-btn" data-tab="field">🏈 The Field</button>
+    <button class="tab-btn" data-tab="rules">📋 Rules</button>
+    <button class="tab-btn" data-tab="skills">🎯 Skills &amp; Moves</button>
+    <button class="tab-btn" data-tab="program">📅 Lesson Plans</button>
+    <button class="tab-btn" data-tab="games">🎮 Fun Games</button>
+    <button class="tab-btn" data-tab="story">📖 Football Story</button>
+    <button class="tab-btn" data-tab="songs">🎵 Football Songs</button>
+    <button class="tab-btn" data-tab="parents">💡 For Parents</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- WELCOME -->
+<section class="panel active" id="welcome">
+  <div class="section-intro">
+    Welcome, Nicolas. You already know how to throw a ball. You've been chucking things at trees since you could walk. Now we're going to learn <em>the whole game</em> — every line on the field, the names of every move, how to score. Take your time. Look at the pictures. Watch a video. Try a drill. Football is not about being perfect. It's about getting curious, working the process, and finding joy in the catch. And the best part — football is a game you can love forever, whether you play it or watch the Patriots on Sundays.
+  </div>
+
+  <h2>What's inside this playbook</h2>
+  <div class="card-grid" style="margin-top:1.2rem">
+    <div class="card">
+      <div class="card-icon">🏟️</div>
+      <h3>The Court</h3>
+      <p class="summary">A picture map of the football field with every line named — yard lines, end zones, goal posts.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h3>The Rules</h3>
+      <p class="summary">10 simple rules. One picture for each. Watch a short video to see it in action.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <h3>Skills &amp; Moves</h3>
+      <p class="summary">Forehand, backhand, serve, volley, overhead. How to grip, how to swing, how to follow through.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📅</div>
+      <h3>Lesson Plans</h3>
+      <p class="summary">Four lesson formats that roll in over the year — one at a time. Same predictable shape every time, so what's inside can stay fresh. 30-min and 60-min versions for Daddy and Coach.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎮</div>
+      <h3>Fun Games</h3>
+      <p class="summary">12 silly, challenging, joyful games to play with Daddy or Coach when practice needs a smile.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📖</div>
+      <h3>Your Football Story</h3>
+      <p class="summary">A picture story about going to football practice — what to expect, what to do, what to feel.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎵</div>
+      <h3>Football Songs</h3>
+      <p class="summary">Custom Suno songs made just for you. Listen before practice to get ready, or after a great game to celebrate. Add new ones anytime.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    The best player is not the one with the most touchdowns. The best player is the one who keeps showing up, keeps trying, and remembers to smile after a great catch.
+  </div>
+</section>
+
+<!-- FIELD -->
+<section class="panel" id="field">
+  <div class="section-intro">
+    Every line on the football field has a name and a job. The field is a giant map of yards — every 5 yards a stripe, every 10 yards a number. Once you know the map, the game makes sense.
+  </div>
+
+  <div class="court-wrap">
+    <svg class="court-svg" viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg" aria-label="American football field diagram">
+      <!-- Outer border (sideline area) -->
+      <rect x="0" y="0" width="800" height="360" fill="#3d6428"/>
+      <!-- Field surface (green) -->
+      <rect x="40" y="40" width="720" height="280" fill="#4a7c2c" stroke="#fbfaf2" stroke-width="3"/>
+      <!-- Left end zone (with diagonal stripes pattern) -->
+      <rect x="40" y="40" width="80" height="280" fill="#3d5e25" stroke="#fbfaf2" stroke-width="3"/>
+      <!-- Right end zone -->
+      <rect x="680" y="40" width="80" height="280" fill="#3d5e25" stroke="#fbfaf2" stroke-width="3"/>
+
+      <!-- Yard lines: every 10 yards. Field is 100 yards between goal lines. -->
+      <!-- 600 pixels of playing field (120 → 680), so 60 pixels = 10 yards -->
+      <!-- Goal lines at x=120 and x=680 -->
+      <line x1="120" y1="40" x2="120" y2="320" stroke="#fbfaf2" stroke-width="3"/>
+      <line x1="680" y1="40" x2="680" y2="320" stroke="#fbfaf2" stroke-width="3"/>
+
+      <!-- 10-yard lines (and labels) -->
+      <line x1="180" y1="40" x2="180" y2="320" stroke="#fbfaf2" stroke-width="1.5"/>
+      <line x1="240" y1="40" x2="240" y2="320" stroke="#fbfaf2" stroke-width="1.5"/>
+      <line x1="300" y1="40" x2="300" y2="320" stroke="#fbfaf2" stroke-width="1.5"/>
+      <line x1="360" y1="40" x2="360" y2="320" stroke="#fbfaf2" stroke-width="1.5"/>
+      <!-- 50-yard line (thicker) -->
+      <line x1="400" y1="40" x2="400" y2="320" stroke="#fbfaf2" stroke-width="2.5"/>
+      <line x1="440" y1="40" x2="440" y2="320" stroke="#fbfaf2" stroke-width="1.5"/>
+      <line x1="500" y1="40" x2="500" y2="320" stroke="#fbfaf2" stroke-width="1.5"/>
+      <line x1="560" y1="40" x2="560" y2="320" stroke="#fbfaf2" stroke-width="1.5"/>
+      <line x1="620" y1="40" x2="620" y2="320" stroke="#fbfaf2" stroke-width="1.5"/>
+
+      <!-- Hash marks (small ticks every 5 yards) -->
+      <g stroke="#fbfaf2" stroke-width="1.2">
+        <line x1="150" y1="120" x2="150" y2="135"/><line x1="150" y1="225" x2="150" y2="240"/>
+        <line x1="210" y1="120" x2="210" y2="135"/><line x1="210" y1="225" x2="210" y2="240"/>
+        <line x1="270" y1="120" x2="270" y2="135"/><line x1="270" y1="225" x2="270" y2="240"/>
+        <line x1="330" y1="120" x2="330" y2="135"/><line x1="330" y1="225" x2="330" y2="240"/>
+        <line x1="370" y1="120" x2="370" y2="135"/><line x1="370" y1="225" x2="370" y2="240"/>
+        <line x1="430" y1="120" x2="430" y2="135"/><line x1="430" y1="225" x2="430" y2="240"/>
+        <line x1="470" y1="120" x2="470" y2="135"/><line x1="470" y1="225" x2="470" y2="240"/>
+        <line x1="530" y1="120" x2="530" y2="135"/><line x1="530" y1="225" x2="530" y2="240"/>
+        <line x1="590" y1="120" x2="590" y2="135"/><line x1="590" y1="225" x2="590" y2="240"/>
+        <line x1="650" y1="120" x2="650" y2="135"/><line x1="650" y1="225" x2="650" y2="240"/>
+      </g>
+
+      <!-- Yard numbers (10, 20, 30, 40, 50, 40, 30, 20, 10) -->
+      <g font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700" fill="#fbfaf2" text-anchor="middle">
+        <text x="180" y="105">10</text><text x="180" y="270">10</text>
+        <text x="240" y="105">20</text><text x="240" y="270">20</text>
+        <text x="300" y="105">30</text><text x="300" y="270">30</text>
+        <text x="360" y="105">40</text><text x="360" y="270">40</text>
+        <text x="400" y="105">50</text><text x="400" y="270">50</text>
+        <text x="440" y="105">40</text><text x="440" y="270">40</text>
+        <text x="500" y="105">30</text><text x="500" y="270">30</text>
+        <text x="560" y="105">20</text><text x="560" y="270">20</text>
+        <text x="620" y="105">10</text><text x="620" y="270">10</text>
+      </g>
+
+      <!-- Goal posts at each end -->
+      <g stroke="#f5d547" stroke-width="3" fill="none">
+        <line x1="40" y1="160" x2="40" y2="200"/>
+        <line x1="35" y1="160" x2="45" y2="160"/>
+        <line x1="35" y1="200" x2="45" y2="200"/>
+        <line x1="760" y1="160" x2="760" y2="200"/>
+        <line x1="755" y1="160" x2="765" y2="160"/>
+        <line x1="755" y1="200" x2="765" y2="200"/>
+      </g>
+
+      <!-- Labels -->
+      <text x="80" y="30" text-anchor="middle" class="label" font-size="14" font-weight="700" fill="#1c3a5e">END ZONE</text>
+      <text x="720" y="30" text-anchor="middle" class="label" font-size="14" font-weight="700" fill="#1c3a5e">END ZONE</text>
+      <text x="400" y="30" text-anchor="middle" class="label" font-size="13" font-weight="700" fill="#1c3a5e">50-YARD LINE (midfield)</text>
+      <text x="400" y="345" text-anchor="middle" class="label" font-size="12" font-style="italic" fill="#1c3a5e">⬅ SIDELINE ➡</text>
+      <text x="120" y="345" text-anchor="middle" class="label" font-size="11" font-weight="700" fill="#1c3a5e">GOAL LINE</text>
+      <text x="680" y="345" text-anchor="middle" class="label" font-size="11" font-weight="700" fill="#1c3a5e">GOAL LINE</text>
+      <text x="80" y="190" text-anchor="middle" class="label" font-size="10" font-style="italic" fill="#fbfaf2" transform="rotate(-90 80 190)">END ZONE</text>
+      <text x="720" y="190" text-anchor="middle" class="label" font-size="10" font-style="italic" fill="#fbfaf2" transform="rotate(90 720 190)">END ZONE</text>
+      <text x="20" y="180" text-anchor="middle" class="label" font-size="10" font-weight="700" fill="#c9a91f" transform="rotate(-90 20 180)">GOAL POST</text>
+      <text x="780" y="180" text-anchor="middle" class="label" font-size="10" font-weight="700" fill="#c9a91f" transform="rotate(90 780 180)">GOAL POST</text>
+    </svg>
+  </div>
+
+  <h3 style="margin: 1.2rem 0 0.7rem">The lines and what they mean</h3>
+  <div class="court-legend">
+    <div class="legend-item"><strong>End zone</strong> The painted area at each end of the field, 10 yards deep. Get the ball into the OTHER team's end zone = TOUCHDOWN!<span class="cue">"Where touchdowns happen."</span></div>
+    <div class="legend-item"><strong>Goal line</strong> The line at the front of each end zone. Cross it WITH the ball = touchdown.<span class="cue">"Cross this line with the ball."</span></div>
+    <div class="legend-item"><strong>Goal post</strong> The yellow "Y" at the back of each end zone. Kick the ball through the uprights = field goal (3 pts) or extra point (1 pt).<span class="cue">"Kick through the Y."</span></div>
+    <div class="legend-item"><strong>50-yard line (midfield)</strong> The line in the middle of the field. Where most kickoffs happen.<span class="cue">"Middle of the field."</span></div>
+    <div class="legend-item"><strong>Yard lines</strong> The white lines every 5 yards. Big numbers every 10 yards tell you how far from the nearest end zone.<span class="cue">"Counts the yards left."</span></div>
+    <div class="legend-item"><strong>Sideline</strong> The long lines on each side. Step on or over it WITH the ball = OUT.<span class="cue">"Step on it = out."</span></div>
+    <div class="legend-item"><strong>Hash marks</strong> The little ticks inside the field. Where the ball is placed when it's spotted between plays.<span class="cue">"Ball goes between these."</span></div>
+    <div class="legend-item"><strong>Line of scrimmage</strong> An imaginary line at the spot of the ball each play. NO crossing it before the snap or it's a penalty.<span class="cue">"Don't cross till the snap."</span></div>
+  </div>
+
+  <h3 style="margin: 2rem 0 0.7rem">Football grows with you</h3>
+  <p style="color:var(--ink-soft); margin-bottom:1rem">Football has stages. Start with flag football (no tackling), build skills, then maybe move to full pads. There is no rush. Every great player started where you are.</p>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon" style="background:linear-gradient(135deg,#a66b3e,#8B4513);color:var(--cream)">🏈</div>
+      <h3>Catch Stage</h3>
+      <p class="summary"><strong>What you learn here:</strong> how to hold the ball, how to throw a spiral, how to catch with two hands. Basics for the backyard. This is where every move becomes <em>yours</em>.</p>
+      <span class="cue">"Two hands. Look it in."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:linear-gradient(135deg,#4a7c2c,#2d4a1b);color:var(--cream)">🎽</div>
+      <h3>Flag Stage</h3>
+      <p class="summary"><strong>What you learn here:</strong> flag football. 5-on-5 or 7-on-7. Pull flags instead of tackling. Real positions: quarterback, receiver, defender, rusher.</p>
+      <span class="cue">"Pull the flag."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:linear-gradient(135deg,#c73e3a,#9c2a26);color:var(--cream)">🏃</div>
+      <h3>Game Stage</h3>
+      <p class="summary"><strong>What you learn here:</strong> running plays, route running, reading the defense. Real downs (you get 4 tries to go 10 yards). The game gets fast — so now your <em>brain</em> starts playing too.</p>
+      <span class="cue">"Now I think and play."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:linear-gradient(135deg,#1c3a5e,#0f2444);color:var(--cream)">🏆</div>
+      <h3>Player Stage</h3>
+      <p class="summary"><strong>What you learn here:</strong> the full game. Real positions. Real strategy. Maybe full pads when you're older. By now your skills, your rules, and your spirit are all yours.</p>
+      <span class="cue">"My game. Forever."</span>
+    </div>
+  </div>
+
+  <h3 style="margin:2rem 0 0.7rem">Watch &amp; learn</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🎬</div>
+      <h3>Flag Football for Beginners</h3>
+      <p class="summary">An intro to flag football rules and gameplay for kids.</p>
+      <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+for+beginners+kids" target="_blank" rel="noopener">▶ Watch</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎬</div>
+      <h3>How to Throw a Football</h3>
+      <p class="summary">The basics of grip, throwing motion, and spiral for kids.</p>
+      <a class="video-link" href="https://www.youtube.com/results?search_query=how+to+throw+a+football+kids" target="_blank" rel="noopener">▶ Watch</a>
+    </div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section class="panel" id="rules">
+  <div class="section-intro">
+    Football has clear rules. Once you know them, every game makes sense. We'll focus on flag football here — that's the right form for now.
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <h3>1. The object of the game</h3>
+      <p class="summary">Move the ball into the OTHER team's end zone = TOUCHDOWN (6 points). Most points wins. That's it.</p>
+      <span class="cue">"Ball in their end zone."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">4️⃣</div>
+      <h3>2. Four downs to move 10 yards</h3>
+      <p class="summary">Your team gets 4 "downs" (tries) to move the ball 10 yards forward. If you make it = fresh set of 4 downs. If you don't = other team gets the ball.</p>
+      <span class="cue">"4 tries. 10 yards."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎽</div>
+      <h3>3. Flags instead of tackles</h3>
+      <p class="summary">In flag football, you wear a belt with two flags. To "tackle" someone, you pull off one of their flags. No grabbing jerseys, no shoving, no tackling.</p>
+      <span class="cue">"Pull the flag. Don't tackle."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏈</div>
+      <h3>4. Snap starts every play</h3>
+      <p class="summary">The center starts the play by snapping the ball backward through their legs to the quarterback. Until the snap, no one can cross the line of scrimmage.</p>
+      <span class="cue">"No moving till the snap."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <h3>5. Pass or run</h3>
+      <p class="summary">After the snap, the quarterback can: <strong>PASS</strong> the ball to a receiver, <strong>HAND IT OFF</strong> to a runner, or <strong>RUN</strong> with it. Pick the right play.</p>
+      <span class="cue">"Pass, hand off, or run."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤲</div>
+      <h3>6. Catching the pass</h3>
+      <p class="summary">A pass is caught if BOTH feet are in bounds and you have the ball with control. Drop it, or step out = INCOMPLETE.</p>
+      <span class="cue">"Two feet. Two hands."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚫</div>
+      <h3>7. Sideline = out</h3>
+      <p class="summary">Step on or over the sideline WITH the ball = the play is over. Ball comes back to where you stepped out.</p>
+      <span class="cue">"Step out = play over."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏆</div>
+      <h3>8. How scoring works</h3>
+      <p class="summary"><strong>Touchdown</strong> (ball in end zone) = <strong>6 points</strong>. <strong>Extra point</strong> (run/pass it in from 5 yards) = <strong>1 point</strong>. (Field goals exist too, but most flag leagues skip them.)</p>
+      <span class="cue">"6 + 1 = 7."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚩</div>
+      <h3>9. Penalties (no's)</h3>
+      <p class="summary">No tackling. No blocking with hands. No flag-guarding (covering your flags with your arms). No crossing the line before the snap. Penalty = the team that fouled loses yards.</p>
+      <span class="cue">"Play clean."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤝</div>
+      <h3>10. Be a great teammate</h3>
+      <p class="summary">Pass to the open person. Cheer for your teammates. Listen to the coach. Shake hands after the game — win or lose. Football is a team sport, even in the backyard.</p>
+      <span class="cue">"Help. Cheer. Shake hands."</span>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    Eleven on a side. Or seven on seven. Or two on two. Or just you and Daddy in the backyard. Football is anywhere there's a ball and a target.
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="panel" id="skills">
+  <div class="section-intro">
+    Every move in football has a name, a stance, and a path. You already know how to throw. Now let's name the moves and learn the secrets.
+  </div>
+
+  <h3 style="margin-bottom:0.8rem">The 6 essential moves</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🏈</div>
+      <h3>Throwing (Spiral)</h3>
+      <p class="summary">Grip the ball with fingers across the laces. Step toward your target. Rotate your hips and shoulders. Release as your arm comes over the top. Snap the wrist — that's what makes the SPIRAL.</p>
+      <span class="cue">"Laces. Step. Snap."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤲</div>
+      <h3>Catching</h3>
+      <p class="summary">Two hands. Pinky fingers together for LOW passes (under your chest). Thumbs together for HIGH passes (above your chest). Look the ball INTO your hands. Then pull it tight.</p>
+      <span class="cue">"Look it in. Tuck it."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏃</div>
+      <h3>Running with the ball</h3>
+      <p class="summary">Hold the ball TIGHT against your body with your strong arm. Cover both ends (one end in your hand, one in your armpit). Keep your other arm free for balance. Run hard.</p>
+      <span class="cue">"Tuck it tight. Run hard."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎽</div>
+      <h3>Pulling the flag</h3>
+      <p class="summary">Get to the ball-carrier's hip area. Grab the FLAG (not the body). Pull straight away. Hold it up so the ref can see.</p>
+      <span class="cue">"Flag, not body."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏃</div>
+      <h3>Running routes</h3>
+      <p class="summary">A "route" is the path a receiver runs after the snap. <strong>Slant:</strong> 3 steps forward, then cut at 45°. <strong>Out:</strong> straight then cut sideways. <strong>Post:</strong> straight then cut toward the goalpost. Plan it before the snap.</p>
+      <span class="cue">"Run the route I planned."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">⬇️</div>
+      <h3>The snap (center exchange)</h3>
+      <p class="summary">The center holds the ball, bends over, and PUSHES it backward through their legs to the quarterback. Quarterback catches it and starts the play.</p>
+      <span class="cue">"Center to QB."</span>
+    </div>
+  </div>
+
+  <h3 style="margin:2rem 0 0.8rem">The Football Grip (for throwing)</h3>
+  <div class="card">
+    <p><strong>Here's how to hold the ball when you throw:</strong></p>
+    <ul style="margin-left:1.2rem; margin-top:0.5rem">
+      <li>Spread your fingers ACROSS the laces (the white stripes).</li>
+      <li>Index finger near the top, pinky near the bottom.</li>
+      <li>Thumb wraps UNDER the ball.</li>
+      <li>SMALL space between your palm and the ball (don't crush it).</li>
+    </ul>
+    <span class="cue">"Fingers on laces. Thumb under."</span>
+  </div>
+
+  <h3 style="margin:2rem 0 0.8rem">The Receiver's Stance</h3>
+  <div class="card">
+    <p><strong>Before every play, get ready:</strong></p>
+    <ul style="margin-left:1.2rem; margin-top:0.5rem">
+      <li>Feet shoulder-width apart, one foot slightly back.</li>
+      <li>Knees bent, weight on the balls of your feet.</li>
+      <li>Hands ready at your chest, eyes UP looking at the QB.</li>
+      <li>Wait for the snap. THEN run your route.</li>
+    </ul>
+    <span class="cue">"Ready. Watch. Go on the snap."</span>
+  </div>
+
+  <h3 style="margin:2rem 0 0.8rem">The Five Steps of Every Catch</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">1️⃣</div>
+      <h3>See it</h3>
+      <p class="summary">As soon as the ball leaves the QB's hand, find it in the air. Watch only the ball.</p>
+      <span class="cue">"Find it."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">2️⃣</div>
+      <h3>Move</h3>
+      <p class="summary">Get your body in line with where the ball will land. Small fast steps.</p>
+      <span class="cue">"Get under it."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">3️⃣</div>
+      <h3>Hands</h3>
+      <p class="summary">Two hands. Pinkies together for low passes; thumbs together for high passes.</p>
+      <span class="cue">"Make the diamond."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">4️⃣</div>
+      <h3>Catch</h3>
+      <p class="summary">Look the ball INTO your hands. Soft hands — give a little as it arrives.</p>
+      <span class="cue">"Look it in."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">5️⃣</div>
+      <h3>Tuck &amp; run</h3>
+      <p class="summary">Pull the ball tight to your body, cover both ends, then RUN.</p>
+      <span class="cue">"Tuck. Then go."</span>
+    </div>
+  </div>
+</section>
+
+<!-- 52-WEEK PROGRAM -->
+<section class="panel" id="program">
+  <div class="section-intro">
+    The structure stays the same so Nicolas can predict what's coming. The content inside the structure changes so it never gets boring. Four lesson formats roll in over the year — one at a time, never all at once. Each format scales to a 60-min lesson with Coach or a 30-min practice with Daddy.
+  </div>
+
+  <h2 style="margin-bottom:0.4rem">Why formats, not single-skill weeks</h2>
+  <p style="color:var(--ink-soft); margin-bottom: 1.5rem; font-size:1.02rem">Nicolas needs predictable structure. He also needs novelty — but novelty inside the structure, not novelty AS the structure. So instead of "this week we do uppies, next week we do dribbles," every practice follows the same shape: warm up → play → new skill → play with skill → drill → clean up. The shape is the constant. What goes inside each block is what evolves.</p>
+  <p style="color:var(--ink-soft); margin-bottom: 1.5rem; font-size:1.02rem">Built-in transitions (water cooler, ball machine adjustments, lights on/off) are <strong>part of the practice</strong>, not interruptions. They reset attention between blocks. Plan for them.</p>
+
+  <h2 style="margin-top:2rem; margin-bottom:0.7rem">The Four Formats</h2>
+  <p style="color:var(--ink-soft);margin-bottom:1.2rem">One format starts. A second is added at week 7. A third at week 27. A fourth at week 40. After each addition, formats <em>rotate</em> — never converge.</p>
+
+  <!-- FORMAT A -->
+  <div class="format-card format-A">
+    <span class="format-tag tag-A">Format A · Discovery</span>
+    <h3>"Look at this. Let's try."</h3>
+    <span class="format-when">Weeks 1–6 (only format used) · Then in rotation through week 52</span>
+    <p>Foundation building. Lots of preview, lots of demo, lots of "let's see what this is." Skills are introduced gently and revisited often. Every concept Nicolas needs (court parts, grip, bounce-catch, balance, dribbles, uppies, ready position, drop-and-hit) lives inside this format — woven into the warm-up and the new-skill block instead of taking over the whole session.</p>
+
+    <div class="format-versions">
+      <div class="version-block">
+        <h4>With Coach <span class="duration">60 min</span></h4>
+        <ul class="block-list">
+          <li><span class="blk-time">8 min</span><div><span class="blk-name">Warm Up</span><span class="blk-desc">Body wake-up + 2 moves from the warm-up menu (e.g., bounce-catch + dribbles).</span><span class="blk-cue">"Wake up the body."</span></div></li>
+          <li><span class="blk-time">8 min</span><div><span class="blk-name">Play</span><span class="blk-desc">Free play with ball/ball. No goal. No rules. Just fun.</span><span class="blk-cue">"Just play."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">New Skill Preview</span><span class="blk-desc">Watched the video at home? Looked at the picture? Now we name it, demo it, try it slowly.</span><span class="blk-cue">"Watch. Then try."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Play with the New Skill</span><span class="blk-desc">Put it into a game right away. Low-pressure application.</span><span class="blk-cue">"Now use it."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Drill</span><span class="blk-desc">Focused repetition. Coach feeds. Nicolas hits.</span><span class="blk-cue">"Reps build it."</span></div></li>
+          <li><span class="blk-time">8 min</span><div><span class="blk-name">Favorite Game</span><span class="blk-desc">End on a high. Nicolas picks from the games list.</span><span class="blk-cue">"End on a high."</span></div></li>
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Clean Up</span><span class="blk-desc">Pick up balls, water, exit ritual (handshake, "thank you").</span><span class="blk-cue">"Pack up. Water. Thank you."</span></div></li>
+        </ul>
+      </div>
+      <div class="version-block">
+        <h4>With Daddy <span class="duration">30 min</span></h4>
+        <ul class="block-list">
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Warm Up</span><span class="blk-desc">1 move from the menu.</span><span class="blk-cue">"Wake up the body."</span></div></li>
+          <li><span class="blk-time">6 min</span><div><span class="blk-name">Play</span><span class="blk-desc">Free play. Ball machine welcome.</span><span class="blk-cue">"Just play."</span></div></li>
+          <li><span class="blk-time">7 min</span><div><span class="blk-name">Skill</span><span class="blk-desc">Revisit or preview. Quick.</span><span class="blk-cue">"Watch. Then try."</span></div></li>
+          <li><span class="blk-time">7 min</span><div><span class="blk-name">Play with Skill</span><span class="blk-desc">Apply it in a game.</span><span class="blk-cue">"Now use it."</span></div></li>
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Clean Up</span><span class="blk-desc">Lights, water, gear. Same exit ritual.</span><span class="blk-cue">"Pack up. Water. Thank you."</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMAT B -->
+  <div class="format-card format-B">
+    <span class="format-tag tag-B">Format B · Rally</span>
+    <h3>"Back and forth. Keep it going."</h3>
+    <span class="format-when">Introduced Week 7 · Alternates with A through week 26</span>
+    <p>Once foundations land, the focus shifts to <em>game skills</em>. Less new instruction, more applying what you know. Routes, throws, catches, hand-offs. Nicolas gets to feel like a real football player — touching the ball, moving with purpose, the rhythm of the game.</p>
+
+    <div class="format-versions">
+      <div class="version-block">
+        <h4>With Coach <span class="duration">60 min</span></h4>
+        <ul class="block-list">
+          <li><span class="blk-time">8 min</span><div><span class="blk-name">Warm Up</span><span class="blk-desc">2 menu moves (faster reps now). Add shadow swings.</span><span class="blk-cue">"Wake up the body."</span></div></li>
+          <li><span class="blk-time">7 min</span><div><span class="blk-name">Rally Ready</span><span class="blk-desc">Mini bounce-and-hit rally to find the rhythm. No counting yet.</span><span class="blk-cue">"Find the rhythm."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Target Challenge</span><span class="blk-desc">Hoops, cones, or chalk zones on the other side. Hit the target = point.</span><span class="blk-cue">"Aim and hit."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Cooperative Rally</span><span class="blk-desc">Try to beat the team record. "Last week we got to 8. Today let's try 10."</span><span class="blk-cue">"Beat the record."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Mini-Game</span><span class="blk-desc">First to 5 points (or 7). Just for fun, not yet the full scoring system.</span><span class="blk-cue">"First to five."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Cool Down Play</span><span class="blk-desc">Silly low-stakes (Wall Ball, Sharks &amp; Minnows, Steal the Bacon).</span><span class="blk-cue">"Silly games."</span></div></li>
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Clean Up</span><span class="blk-desc">Same exit ritual as Format A.</span><span class="blk-cue">"Pack up. Water. Thank you."</span></div></li>
+        </ul>
+      </div>
+      <div class="version-block">
+        <h4>With Daddy <span class="duration">30 min</span></h4>
+        <ul class="block-list">
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Warm Up</span><span class="blk-desc">1–2 menu moves.</span><span class="blk-cue">"Wake up the body."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Target Practice</span><span class="blk-desc">2 cones or 1 hoop. Aim and hit.</span><span class="blk-cue">"Aim and hit."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Rally Challenge</span><span class="blk-desc">Beat the daily record together.</span><span class="blk-cue">"Beat the record."</span></div></li>
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Clean Up</span><span class="blk-desc">Lights, water, gear.</span><span class="blk-cue">"Pack up. Water. Thank you."</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMAT C -->
+  <div class="format-card format-C">
+    <span class="format-tag tag-C">Format C · Match</span>
+    <h3>"Real football. Real game."</h3>
+    <span class="format-when">Introduced Week 27 · Rotates with A and B through week 39</span>
+    <p>Now real games enter the picture. The session feels more like a real match without losing the playful frame. Nicolas practices small-sided scrimmages, position play, and managing the regulation challenge of competition. Built-in "champion moments" guarantee a high note at the end.</p>
+
+    <div class="format-versions">
+      <div class="version-block">
+        <h4>With Coach <span class="duration">60 min</span></h4>
+        <ul class="block-list">
+          <li><span class="blk-time">8 min</span><div><span class="blk-name">Warm Up</span><span class="blk-desc">Menu moves + add a few shadow serves and split steps.</span><span class="blk-cue">"Wake up the body."</span></div></li>
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Shadow Preview</span><span class="blk-desc">No ball. Walk through "today we're playing first-to-7." Practice calling the score out loud.</span><span class="blk-cue">"Walk it. No ball."</span></div></li>
+          <li><span class="blk-time">12 min</span><div><span class="blk-name">Point Practice</span><span class="blk-desc">Single points, no full games. Coach feeds first ball. Play it out.</span><span class="blk-cue">"One point at a time."</span></div></li>
+          <li><span class="blk-time">15 min</span><div><span class="blk-name">Mini Match</span><span class="blk-desc">First to 4 or 7 points, with score-calling. Take a water break between games.</span><span class="blk-cue">"Real score."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Champion Moment</span><span class="blk-desc">A favorite drill or game from earlier. Always end on a win-feeling.</span><span class="blk-cue">"End on a win."</span></div></li>
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Cool Down</span><span class="blk-desc">Two laps, light stretches, water.</span><span class="blk-cue">"Lap. Stretch. Water."</span></div></li>
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Clean Up</span><span class="blk-desc">Same exit ritual.</span><span class="blk-cue">"Pack up. Water. Thank you."</span></div></li>
+        </ul>
+      </div>
+      <div class="version-block">
+        <h4>With Daddy <span class="duration">30 min</span></h4>
+        <ul class="block-list">
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Warm Up</span><span class="blk-desc">1–2 menu moves.</span><span class="blk-cue">"Wake up the body."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Point Practice</span><span class="blk-desc">Single points. Call the score together.</span><span class="blk-cue">"One point at a time."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Mini Game</span><span class="blk-desc">First to 5. Fast, fun.</span><span class="blk-cue">"Real score."</span></div></li>
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Clean Up</span><span class="blk-desc">Lights, water, gear.</span><span class="blk-cue">"Pack up. Water. Thank you."</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMAT D -->
+  <div class="format-card format-D">
+    <span class="format-tag tag-D">Format D · Athlete</span>
+    <h3>"I am a football player. This is my game."</h3>
+    <span class="format-when">Introduced Week 40 · Rotates with A, B, and C through week 52</span>
+    <p>Ownership and reflection. Nicolas chooses his warm-up moves from the menu. He picks one stroke he wants to refine. He plays a tactical game (hit deep, come to net, etc.). And at the end, he watches a short clip or names one win and one challenge — the metacognitive frame that real athletes build.</p>
+
+    <div class="format-versions">
+      <div class="version-block">
+        <h4>With Coach <span class="duration">60 min</span></h4>
+        <ul class="block-list">
+          <li><span class="blk-time">8 min</span><div><span class="blk-name">Warm Up — Your Choice</span><span class="blk-desc">Nicolas picks 2 moves from the menu. He calls them out.</span><span class="blk-cue">"I pick today."</span></div></li>
+          <li><span class="blk-time">12 min</span><div><span class="blk-name">Technical Tune-Up</span><span class="blk-desc">"What do you want to work on today?" Forehand? Serve? Volley? He chooses.</span><span class="blk-cue">"Make my best better."</span></div></li>
+          <li><span class="blk-time">12 min</span><div><span class="blk-name">Tactical Challenge</span><span class="blk-desc">A game with one specific tactic — "every shot has to land deep" or "sneak to the net."</span><span class="blk-cue">"One rule. One game."</span></div></li>
+          <li><span class="blk-time">15 min</span><div><span class="blk-name">Match Play</span><span class="blk-desc">Full small-sided scrimmage. Real positions, real football.</span><span class="blk-cue">"Play it real."</span></div></li>
+          <li><span class="blk-time">8 min</span><div><span class="blk-name">Reflect</span><span class="blk-desc">Watch a 30-second clip Coach filmed. Name one win. Name one challenge for next time.</span><span class="blk-cue">"What did I learn?"</span></div></li>
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Clean Up</span><span class="blk-desc">Same exit ritual.</span><span class="blk-cue">"Pack up. Water. Thank you."</span></div></li>
+        </ul>
+      </div>
+      <div class="version-block">
+        <h4>With Daddy <span class="duration">30 min</span></h4>
+        <ul class="block-list">
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Warm Up — Choice</span><span class="blk-desc">Nicolas picks his moves.</span><span class="blk-cue">"I pick today."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Tune-Up</span><span class="blk-desc">One stroke he wants to work on.</span><span class="blk-cue">"Make my best better."</span></div></li>
+          <li><span class="blk-time">10 min</span><div><span class="blk-name">Match Play</span><span class="blk-desc">Quick game, real scoring.</span><span class="blk-cue">"Play it real."</span></div></li>
+          <li><span class="blk-time">5 min</span><div><span class="blk-name">Reflect + Clean Up</span><span class="blk-desc">"What was your favorite shot today?"</span><span class="blk-cue">"What did I learn?"</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WARM UP MENU -->
+  <h2 style="margin-top:2.5rem; margin-bottom:0.6rem">The Warm-Up Menu</h2>
+  <p style="color:var(--ink-soft); margin-bottom:1.2rem">These are the foundation moves from the original "weeks 1–6." They never go away. They live in the warm-up of every format, every session — picking 1–3 each time, rotating through. New foundation moves get added; old ones fade and return.</p>
+
+  <div class="warmup-grid">
+    <div class="warmup-item"><h4>🚶 Field Walk</h4><p>Walk every line. Name each one out loud. Stand on the 50, the goal line, the end zone.</p><span class="cue">"Name every line."</span></div>
+    <div class="warmup-item"><h4>🤸 Body Wake-Up</h4><p>Jumping jacks, butt kicks, side shuffle, arm circles, high knees. 30 seconds each.</p><span class="cue">"Wake the body."</span></div>
+    <div class="warmup-item"><h4>🏈 Ball Holds</h4><p>Hold the ball with the proper grip. Fingers on laces. Switch hands. Build the "feel."</p><span class="cue">"Fingers on laces."</span></div>
+    <div class="warmup-item"><h4>🤲 Soft Hands</h4><p>Daddy gently tosses the ball at your chest. Catch with two hands, pinkies together for low, thumbs together for high. 10 in a row.</p><span class="cue">"Look it in."</span></div>
+    <div class="warmup-item"><h4>🎯 Short Throws</h4><p>5 yards apart. Throw spirals back and forth. Build distance only when the spiral is tight.</p><span class="cue">"Tight spirals first."</span></div>
+    <div class="warmup-item"><h4>🏃 Route Walks</h4><p>Walk through a route at slow speed. Slant. Out. Post. Get the cuts right before you sprint.</p><span class="cue">"Sharp cuts."</span></div>
+    <div class="warmup-item"><h4>🎽 Flag Pull Drill</h4><p>Daddy walks/jogs past you holding a flag. Pull it as he passes. Switch sides.</p><span class="cue">"Flag, not body."</span></div>
+    <div class="warmup-item"><h4>⬇️ Center Snaps</h4><p>Practice snapping the ball between your legs to a partner behind you. Smooth and accurate.</p><span class="cue">"Snap straight back."</span></div>
+    <div class="warmup-item"><h4>🚦 Stop &amp; Go</h4><p>Sprint forward. On Daddy's whistle, STOP fast. On the next whistle, GO. Builds route control.</p><span class="cue">"Stop on the whistle."</span></div>
+    <div class="warmup-item"><h4>🤾 Backpedal</h4><p>Run BACKWARDS for 5 yards. Defenders need this to stay in front of receivers. Small fast steps, eyes UP.</p><span class="cue">"Eyes up. Small steps."</span></div>
+  </div>
+
+  <!-- THE ROTATION CALENDAR -->
+  <h2 style="margin-top:2.5rem; margin-bottom:0.6rem">The 52-Week Rotation</h2>
+  <p style="color:var(--ink-soft); margin-bottom:1.2rem">Each week shows the format used and the new content focus inside it. Skills can rotate, fade, return, or be skipped. Life happens — there is no falling behind.</p>
+
+  <!-- PHASE 1 -->
+  <div class="phase">
+    <h3>Phase 1 · Discover the Ball</h3>
+    <div class="phase-meta">
+      <span class="phase-chip">Weeks 1–6</span>
+      <span class="phase-chip">Format A only</span>
+      <span class="phase-chip">Same shape every time</span>
+    </div>
+    <p>Six weeks of the exact same lesson shape. Every block in the same order. The content inside the warm-up and the new-skill block rotates through the foundation moves so Nicolas gets familiar with all of them — but the structure never moves. This is when the format becomes <em>predictable</em>. After six weeks, he knows it.</p>
+  </div>
+  <div class="week-row">
+    <div class="week-card fmt-A"><span class="wk-num">Week 1<span class="fmt-pill A">A</span></span><h4>Discover the Field</h4><p><em>Warm-up:</em> body wake-up + field walk. <em>New skill:</em> name every line (yard lines, end zones, goal posts). <em>Play:</em> tag in the end zone.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 2<span class="fmt-pill A">A</span></span><h4>Discover the Ball</h4><p><em>Warm-up:</em> ball holds + body wake-up. <em>New skill:</em> proper grip (fingers on laces). <em>Play:</em> hand-off relay.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 3<span class="fmt-pill A">A</span></span><h4>Discover the Catch</h4><p><em>Warm-up:</em> ball holds + soft hands. <em>New skill:</em> two-hand catch — thumbs together for high, pinkies together for low. <em>Play:</em> 10 chest catches in a row.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 4<span class="fmt-pill A">A</span></span><h4>Discover the Throw</h4><p><em>Warm-up:</em> soft hands + short throws. <em>New skill:</em> the throwing motion — step, rotate, release with wrist snap. <em>Play:</em> 5-yard catch with Daddy.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 5<span class="fmt-pill A">A</span></span><h4>Discover the Spiral</h4><p><em>Warm-up:</em> short throws. <em>New skill:</em> wrist snap that makes the ball SPIN. Tight spirals fly straighter.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 6<span class="fmt-pill A">A</span></span><h4>Discover Running with the Ball</h4><p><em>Warm-up:</em> ball holds. <em>New skill:</em> tuck the ball tight, cover both ends, run with purpose.</p></div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase">
+    <h3>Phase 2 · Adding Game Skills</h3>
+    <div class="phase-meta">
+      <span class="phase-chip">Weeks 7–26</span>
+      <span class="phase-chip">A &amp; B alternating</span>
+      <span class="phase-chip">First format change</span>
+    </div>
+    <p>Format B joins. The two formats alternate every other week — A, then B, then A, then B. Format A keeps introducing new technical pieces (routes, throws, catches); Format B applies them in cooperative drills. Watch for Nicolas noticing the new format. Talk about it. Use the visual schedule to preview the difference.</p>
+  </div>
+  <div class="week-row">
+    <div class="week-card fmt-A"><span class="wk-num">Week 7<span class="fmt-pill A">A</span></span><h4>Spiral Refined</h4><p>New skill: smooth release. Step toward target. Snap the wrist. Tight spirals only.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 8<span class="fmt-pill B">B</span></span><h4>Catch Rally</h4><p>How many catches in a row with Daddy? Beat the record.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 9<span class="fmt-pill A">A</span></span><h4>Slant Route</h4><p>New skill: 3 steps forward, then cut at 45° toward the middle. Sharp cut.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 10<span class="fmt-pill B">B</span></span><h4>Slant &amp; Catch</h4><p>Run the slant. Daddy throws. Catch and tuck. 10 reps.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 11<span class="fmt-pill A">A</span></span><h4>Out Route</h4><p>New skill: straight forward, then cut sideways toward the sideline. Stop your feet HARD on the cut.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 12<span class="fmt-pill B">B</span></span><h4>Out &amp; Catch</h4><p>Run the out. Daddy throws. Catch in stride.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 13<span class="fmt-pill A">A</span></span><h4>Post Route</h4><p>New skill: straight forward, then cut toward the goal post (45° toward middle, deeper than slant).</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 14<span class="fmt-pill B">B</span></span><h4>Route Mix</h4><p>Daddy calls "slant!", "out!", or "post!" — you run the route called. Catch the pass.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 15<span class="fmt-pill A">A</span></span><h4>Flag Pull Drill</h4><p>New skill: Daddy jogs past wearing a flag belt. Pull the flag straight away. Hold it up.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 16<span class="fmt-pill B">B</span></span><h4>Flag Chase</h4><p>Daddy is the runner. Nicolas chases and pulls the flag. Then switch.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 17<span class="fmt-pill A">A</span></span><h4>Center Snap</h4><p>New skill: hold ball with one hand. Bend over. Snap ball BACKWARDS through your legs to Daddy (the QB).</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 18<span class="fmt-pill B">B</span></span><h4>Snap &amp; Throw</h4><p>You snap to Daddy. He throws. You run a route. Catch. Tuck.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 19<span class="fmt-pill A">A</span></span><h4>Hand-Off</h4><p>New skill: take a hand-off from the QB. Arms create a "pocket" (one up, one down). QB places the ball, you clamp it.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 20<span class="fmt-pill B">B</span></span><h4>Hand-Off &amp; Run</h4><p>Daddy hands off. Nicolas runs through cones to the end zone.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 21<span class="fmt-pill A">A</span></span><h4>Backpedal &amp; Plant</h4><p>New skill: defensive footwork. Run backwards, then plant your foot and break in any direction.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 22<span class="fmt-pill B">B</span></span><h4>Mirror Drill</h4><p>Daddy is the receiver. Nicolas backpedals, mirrors Daddy's moves. Stay in front.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 23<span class="fmt-pill A">A</span></span><h4>QB Mechanics</h4><p>New skill: 3-step drop after the snap. Plant, scan the field, throw to the open receiver.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 24<span class="fmt-pill B">B</span></span><h4>3-Step Drop &amp; Throw</h4><p>Snap. Drop. Throw. Repeat to multiple targets.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 25<span class="fmt-pill A">A</span></span><h4>Defending the Pass</h4><p>New skill: knock the ball down (don't catch — just smack it away if you can't intercept).</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 26<span class="fmt-pill B">B</span></span><h4>Backyard Showdown</h4><p>End-of-phase celebration. 1-on-1 throw-and-catch contest. Best of 10.</p></div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase">
+    <h3>Phase 3 · Adding Match Play</h3>
+    <div class="phase-meta">
+      <span class="phase-chip">Weeks 27–39</span>
+      <span class="phase-chip">A, B &amp; C rotating</span>
+      <span class="phase-chip">Real scoring arrives</span>
+    </div>
+    <p>Format C enters. Now three formats rotate (A → B → C → A → B → C…). Format C is where real small-sided games happen. Format A keeps introducing new skills (reading defenses, stiff-arms, play calling). Format B keeps the cooperative drill muscle. Format C is where Nicolas practices the regulation challenge of competitive games with built-in safety: champion moments, water breaks, predictable structure.</p>
+  </div>
+  <div class="week-row">
+    <div class="week-card fmt-C"><span class="wk-num">Week 27<span class="fmt-pill C">C</span></span><h4>First 1-on-1 Drive</h4><p>Format C debuts. Nicolas as QB+receiver vs Daddy as defender. 4 downs to score.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 28<span class="fmt-pill A">A</span></span><h4>Reading the Defense</h4><p>New skill: before the snap, LOOK at the defense. Where are they? Open spots = throw there.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 29<span class="fmt-pill B">B</span></span><h4>Pre-Snap Read</h4><p>Daddy moves around as a defender. Nicolas calls out where the open space is.</p></div>
+    <div class="week-card fmt-C"><span class="wk-num">Week 30<span class="fmt-pill C">C</span></span><h4>2-on-2 Backyard Game</h4><p>Need at least 4 players (Daddy + sibling + neighbor?). Real teams. Real flags. Real plays.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 31<span class="fmt-pill A">A</span></span><h4>Stiff-Arm</h4><p>New skill: while running with the ball, push a defender away with your open palm (in flag football, gentle push only — no contact in the face).</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 32<span class="fmt-pill B">B</span></span><h4>Run &amp; Defend</h4><p>Nicolas runs with the ball. Daddy tries to pull the flag. Practice the stiff-arm.</p></div>
+    <div class="week-card fmt-C"><span class="wk-num">Week 33<span class="fmt-pill C">C</span></span><h4>3-on-3 Match</h4><p>Bigger scrimmage. Real positions: QB, two receivers, two defenders.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 34<span class="fmt-pill A">A</span></span><h4>Play Calling</h4><p>New skill: huddle up before each play. Pick the play. Everyone knows their job.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 35<span class="fmt-pill B">B</span></span><h4>Run the Play</h4><p>Huddle. Break. Snap. Run the play exactly as called.</p></div>
+    <div class="week-card fmt-C"><span class="wk-num">Week 36<span class="fmt-pill C">C</span></span><h4>Match with Downs</h4><p>Real downs: 4 tries to go 10 yards. First down resets the count.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 37<span class="fmt-pill A">A</span></span><h4>QB Scrambling</h4><p>New skill: if the pocket breaks down, RUN. Pick up yards with your legs.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 38<span class="fmt-pill B">B</span></span><h4>Scramble Game</h4><p>Daddy rushes the passer. Nicolas scrambles, picks up yards on the ground.</p></div>
+    <div class="week-card fmt-C"><span class="wk-num">Week 39<span class="fmt-pill C">C</span></span><h4>Backyard Bowl</h4><p>Best of 3 games. Champion moment ending. Trophy treat.</p></div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase">
+    <h3>Phase 4 · Becoming a Football Player</h3>
+    <div class="phase-meta">
+      <span class="phase-chip">Weeks 40–52</span>
+      <span class="phase-chip">A, B, C &amp; D rotating</span>
+      <span class="phase-chip">Ownership emerges</span>
+    </div>
+    <p>Format D enters. All four rotate (A → B → C → D → A → B → C → D…). Format D is where Nicolas becomes the author. He picks his warm-up. He picks the skill to refine. He reflects at the end. The other formats keep doing what they do — but now there's a session every fourth week where he's running the show.</p>
+  </div>
+  <div class="week-row">
+    <div class="week-card fmt-D"><span class="wk-num">Week 40<span class="fmt-pill D">D</span></span><h4>I Choose My Warm-Up</h4><p>Format D debuts. Nicolas picks 2 menu moves. Picks one skill to refine.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 41<span class="fmt-pill A">A</span></span><h4>Reading on the Run</h4><p>New skill: while running a route, look back EARLY to find the ball.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 42<span class="fmt-pill B">B</span></span><h4>Look-Back Catch</h4><p>Run the route. Look back at exactly the right moment. Catch.</p></div>
+    <div class="week-card fmt-C"><span class="wk-num">Week 43<span class="fmt-pill C">C</span></span><h4>Match with Plays</h4><p>Scrimmage where every play is a designed play (not just freestyle).</p></div>
+    <div class="week-card fmt-D"><span class="wk-num">Week 44<span class="fmt-pill D">D</span></span><h4>Tactic: Look Off the Defender</h4><p>Game with one rule: QB has to look at one receiver and throw to a different one.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 45<span class="fmt-pill A">A</span></span><h4>Long Ball</h4><p>New skill: throw the deep ball. More legs, more shoulder, big follow-through.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 46<span class="fmt-pill B">B</span></span><h4>Deep Catch Drill</h4><p>Long throws. Catch over the shoulder. Tough but glorious.</p></div>
+    <div class="week-card fmt-C"><span class="wk-num">Week 47<span class="fmt-pill C">C</span></span><h4>Game with Deep Plays</h4><p>Scrimmage with at least one deep ball attempt per drive.</p></div>
+    <div class="week-card fmt-D"><span class="wk-num">Week 48<span class="fmt-pill D">D</span></span><h4>Tactic: 2 Routes, Pick Open</h4><p>2 receivers run different routes. QB picks whoever is open.</p></div>
+    <div class="week-card fmt-A"><span class="wk-num">Week 49<span class="fmt-pill A">A</span></span><h4>Position Play</h4><p>New skill: pick a position and own it. QB, receiver, center, defender — know your job.</p></div>
+    <div class="week-card fmt-B"><span class="wk-num">Week 50<span class="fmt-pill B">B</span></span><h4>Position Rotation</h4><p>Every 5 minutes: switch positions. Learn every job.</p></div>
+    <div class="week-card fmt-C"><span class="wk-num">Week 51<span class="fmt-pill C">C</span></span><h4>Friends &amp; Family Game</h4><p>Get a real game going with cousins/neighbors. Real teams. Real fun.</p></div>
+    <div class="week-card fmt-D"><span class="wk-num">Week 52<span class="fmt-pill D">D</span></span><h4>Football Birthday</h4><p>Year-end. Reflect: 3 favorite moments. Set a goal for Year 2. Celebrate.</p></div>
+  </div>
+
+  <div class="pull-quote">
+    The format is the frame. The content is the painting. The frame stays steady so the painting can be bold.
+  </div>
+</section>
+
+<!-- GAMES -->
+<section class="panel" id="games">
+  <div class="section-intro">
+    Drills get the body strong. Games get the spirit strong. Mix them in every practice. Most use one ball and an open yard — perfect for the backyard. Some need a buddy or two. Others are perfect for when Alexander joins.
+  </div>
+
+  <div class="card-grid">
+    <div class="card" style="border-color: var(--goal-red); background: linear-gradient(135deg, #fef7e6, var(--cream-deep));">
+      <div class="card-icon" style="background: linear-gradient(135deg, #c89564, #a66b3e)">🏈</div>
+      <h3>500 <span style="font-size:0.75rem; background:var(--goal-red); color:var(--cream); padding:0.15rem 0.5rem; border-radius:999px; font-weight:700; vertical-align:middle; margin-left:0.4rem">CLASSIC</span></h3>
+      <p class="summary">The backyard football classic. One player is the QUARTERBACK and throws the ball up. Everyone else tries to catch it. Catching = 100 points. Tipping it (then catching) = 75. Catching on one bounce = 50. First to 500 points becomes the new quarterback.</p>
+      <p style="font-size:0.88rem; color:var(--ink-soft); margin-top:0.6rem"><strong>Why it's perfect for the brothers:</strong> built-in regulation breaks (each throw resets the field), social and silly, predictable structure with novelty, and Alexander can be the QB while Nicolas catches.</p>
+      <span class="cue">"Catch it. Add the points."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">👋</div>
+      <h3>Two-Hand Touch</h3>
+      <p class="summary">Simpler than flag football — no flags needed. Two hands touch the ball-carrier below the shoulders = tackled. Otherwise same as flag.</p>
+      <span class="cue">"Two-hand tag."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <h3>Tire Throw (Target Practice)</h3>
+      <p class="summary">Hang a tire from a tree (or use a hula hoop on a stand). Stand 10 yards away. Throw the football THROUGH the tire. 10 throws, count makes.</p>
+      <span class="cue">"Aim. Spiral. Through."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏃</div>
+      <h3>Hot Potato Football</h3>
+      <p class="summary">Stand in a circle. Pass the ball as fast as possible. Drop it = you're out. Last one wins.</p>
+      <span class="cue">"Soft hands. Fast pass."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚧</div>
+      <h3>Cone Routes</h3>
+      <p class="summary">Set up cones for slants, outs, posts. Run each route in turn. Daddy throws to the spot where the route ends.</p>
+      <span class="cue">"Sharp cuts. Look back."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎽</div>
+      <h3>Flag Tag</h3>
+      <p class="summary">Wear flag belts. No ball. Just chase each other and pull flags. Last one with both flags wins.</p>
+      <span class="cue">"Flag, not body."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚦</div>
+      <h3>Red Light, Green Light Football</h3>
+      <p class="summary">Daddy says "green!" — you sprint with the ball. "Red!" — STOP. "Yellow!" — slow motion. Builds ball control under pressure.</p>
+      <span class="cue">"Stop on red."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏆</div>
+      <h3>Touchdown Race</h3>
+      <p class="summary">Daddy and Nicolas line up at the goal line. Daddy throws the ball downfield. Whoever catches it RUNS to the opposite goal line. Defender tries to pull the flag.</p>
+      <span class="cue">"Catch, then sprint."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤲</div>
+      <h3>Pop Pass Rally</h3>
+      <p class="summary">Cooperative game. Quick short pops back and forth, 5 yards apart. How many in a row without dropping?</p>
+      <span class="cue">"Soft hands. Beat our record."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">⏱️</div>
+      <h3>Beat the Clock</h3>
+      <p class="summary">60 seconds. How many "completions" (caught passes) can Daddy throw to Nicolas? Beat the score each week.</p>
+      <span class="cue">"Fast hands."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🥄</div>
+      <h3>Pass &amp; Spot</h3>
+      <p class="summary">Each catch, you "spot" the ball where you caught it. Try to make it to a target (tree, end zone) in 5 catches.</p>
+      <span class="cue">"Move the ball forward."</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧱</div>
+      <h3>Wall Spiral (Indoor)</h3>
+      <p class="summary">Rainy day? Throw a small football against a wall, catch the rebound. Build the wrist snap.</p>
+      <span class="cue">"Snap the wrist."</span>
+    </div>
+  </div>
+
+  <h3 style="margin: 2rem 0 0.7rem">Watch fun football games in action</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🎬</div>
+      <h3>500 (Backyard Football)</h3>
+      <p class="summary">A walk-through of the classic 500 game.</p>
+      <a class="video-link" href="https://www.youtube.com/results?search_query=500+football+backyard+game" target="_blank" rel="noopener">▶ Watch</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎬</div>
+      <h3>Flag Football Drills</h3>
+      <p class="summary">Drills for kids learning flag football.</p>
+      <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+drills+kids" target="_blank" rel="noopener">▶ Watch</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem; background:var(--cream-deep)">
+    <h3>Make any drill more fun</h3>
+    <ul style="margin-left:1.2rem; margin-top:0.5rem">
+      <li><strong>Add a story.</strong> "You're down by 4 with 10 seconds left. Throw the Hail Mary."</li>
+      <li><strong>Add silly cues.</strong> "Aim for the tree. Hit the tree, win a million dollars."</li>
+      <li><strong>Add a target.</strong> A cone, a tire, a chalk square. Aim is more fun than just throwing.</li>
+      <li><strong>Add a count-out-loud.</strong> "Hut!... Hut!... HUT!" Builds rhythm. Builds confidence.</li>
+      <li><strong>Add a victory move.</strong> Touchdown dance. Spike the ball (gently). The "first down" point.</li>
+      <li><strong>Add music.</strong> Bring a speaker. Pick the songs. Football to a beat.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SOCIAL STORY -->
+<section class="panel" id="story">
+  <div class="section-intro">
+    A picture story about a football practice. Read it with Mom or Dad before the day. Read it again whenever you want. The pictures show what to expect. The words show what to do.
+  </div>
+
+  <div class="story-book">
+    <div style="text-align:center; margin-bottom:1.5rem">
+      <h2 style="color:var(--goal-red-deep)">Nicolas Plays Backyard Football</h2>
+      <p style="font-style:italic; color:var(--ink-soft)">A story about my lesson</p>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">🎾</div>
+      <div class="text"><span class="story-num">PAGE 1</span>My name is Nicolas. I am a football player.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">📅</div>
+      <div class="text"><span class="story-num">PAGE 2</span>Today is football practice. I will play with Coach.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">🎒</div>
+      <div class="text"><span class="story-num">PAGE 3</span>I pack my bag. Racquet. Water bottle. Snack. I am ready.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">🚗</div>
+      <div class="text"><span class="story-num">PAGE 4</span>We go to the backyard. I have my football and water.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">👋</div>
+      <div class="text"><span class="story-num">PAGE 5</span>I see Coach. He says "Hi Nicolas!" I can say hi back, or wave, or smile.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">🤸</div>
+      <div class="text"><span class="story-num">PAGE 6</span>First we warm up. We jog. We stretch. My body wakes up.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">🏃</div>
+      <div class="text"><span class="story-num">PAGE 7</span>Then we do drills. Coach feeds me balls. I hit them.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">💪</div>
+      <div class="text"><span class="story-num">PAGE 8</span>Sometimes I hit it great. I feel proud.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">🤔</div>
+      <div class="text"><span class="story-num">PAGE 9</span>Sometimes I miss. That is OK. Even pros miss balls. Missing means I am learning.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">😮‍💨</div>
+      <div class="text"><span class="story-num">PAGE 10</span>If I feel frustrated, I can take a deep breath. I can ask for a water break. That is allowed.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">🎯</div>
+      <div class="text"><span class="story-num">PAGE 11</span>Coach helps me. He gives me a tip. I try again.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">🎮</div>
+      <div class="text"><span class="story-num">PAGE 12</span>At the end, we play a fun game. I love this part.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">🤝</div>
+      <div class="text"><span class="story-num">PAGE 13</span>When the lesson is done, I shake Coach's hand. I say "Thank you Coach!"</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">⭐</div>
+      <div class="text"><span class="story-num">PAGE 14</span>I tell Mom or Dad one thing I liked. One thing I learned. One thing that was hard.</div>
+    </div>
+
+    <div class="story-page">
+      <div class="emoji">🌟</div>
+      <div class="text"><span class="story-num">PAGE 15</span>Football makes me strong. Football makes me focused. Football makes me happy. I am a football player.</div>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    Missing a pass is part of the game. Learning is part of the game. Showing up is part of the game. You belong on the field.
+  </div>
+</section>
+
+<!-- SOCCER SONGS -->
+<section class="panel" id="songs">
+  <div class="section-intro">
+    Music is part of the practice. Songs help Nicolas preview what's coming, regulate his body between blocks, and celebrate the joy of a great catch. Tap to play. Add new ones any time.
+  </div>
+<div class="user-songs-section">
+  <button class="add-song-btn" id="add-song-btn" type="button">+ Add a Suno Song</button>
+  <div id="user-songs-list"></div>
+</div>
+
+
+  <h2 style="margin-bottom:0.4rem">Nicolas's Football Playlist</h2>
+  <p style="color:var(--ink-soft); margin-bottom:1.5rem">Tap any song to listen. Use them before practice, between blocks, or after a great game.</p>
+
+  <div class="card-grid">
+    <div class="card song-add">
+      <div class="card-icon" style="background:linear-gradient(135deg, var(--cream), var(--cream-deep)) !important; color:var(--grass-deep); border:2px dashed var(--grass);">🎵</div>
+      <h3>Make Your First Football Song</h3>
+      <p class="summary" style="text-align:left">Same workflow as the tennis songs. Some ideas:</p>
+      <ol>
+        <li>"Hut Hut Hut" — a rhythm song for snaps and pre-snap routines.</li>
+        <li>"Nicolas the Receiver" — a hype song to play before a game.</li>
+        <li>"Spiral Spiral" — a song about the throwing motion.</li>
+        <li>"The Backyard Bowl" — a song for when Nicolas and Alexander play in the yard.</li>
+        <li>"Pulled the Flag" — a celebration song.</li>
+      </ol>
+    </div>
+    <div class="card song-add">
+      <div class="card-icon" style="background:linear-gradient(135deg, var(--cream), var(--cream-deep)) !important; color:var(--grass-deep); border:2px dashed var(--grass);">➕</div>
+      <h3>How to Add a New Song</h3>
+      <p class="summary" style="text-align:left">Tap the green <strong>+ Add a Suno Song</strong> button at the top of this panel. The app will save your songs right on this iPad — they'll be there next time too.</p>
+      <ol>
+        <li>Make the song on Suno together with Nicolas/Alexander.</li>
+        <li>Copy the share link from Suno (the URL of the song page).</li>
+        <li>Tap <strong>+ Add a Suno Song</strong> above.</li>
+        <li>Enter the title, paste the URL, tap Save.</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3 style="margin: 2rem 0 0.7rem">When to use the songs</h3>
+  <div class="song-uses">
+    <div class="song-use">
+      <h4>🎒 On the way to practice</h4>
+      <p>In the car. Builds anticipation. Lets the body get into "football mode" before practice.</p>
+    </div>
+    <div class="song-use">
+      <h4>🤸 Warm-up block</h4>
+      <p>Play a song while doing menu moves. The song's length signals when warm-up is done.</p>
+    </div>
+    <div class="song-use">
+      <h4>💧 Between blocks</h4>
+      <p>A 30-second song clip resets attention before moving to the next part of the lesson.</p>
+    </div>
+    <div class="song-use">
+      <h4>🏆 Champion moment</h4>
+      <p>End every Format C lesson with a song. Pair the song with the win-feeling.</p>
+    </div>
+    <div class="song-use">
+      <h4>😮‍💨 Regulation</h4>
+      <p>If a moment feels hard, pause and listen to a familiar song. Then come back to the field.</p>
+    </div>
+    <div class="song-use">
+      <h4>🚗 Drive home</h4>
+      <p>Replay the song on the way home. Pairs the music with the memory of a good game.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    A song is a feeling you can put in your pocket. Football plus music plus rhythm plus joy — that is your game.
+  </div>
+
+  <p style="text-align:center; margin-top:2rem; font-family:'Fraunces',serif; font-style:italic; color:var(--ink-soft)">— Built with love for Nicolas —</p>
+</section>
+
+
+
+<div class="song-modal-overlay" id="song-modal" hidden>
+  <div class="song-modal-box" role="dialog" aria-modal="true" aria-labelledby="song-modal-title">
+    <h3 id="song-modal-title">Add a Suno Song</h3>
+    <label class="song-modal-label" for="song-title-input">Song Title</label>
+    <input type="text" id="song-title-input" placeholder="e.g. Hype Song" autocomplete="off">
+    <label class="song-modal-label" for="song-url-input">Suno URL</label>
+    <input type="url" id="song-url-input" placeholder="https://suno.com/s/...">
+    <p class="song-modal-hint">Paste the share link from Suno (the URL of the song page).</p>
+    <div class="song-modal-actions">
+      <button class="song-modal-btn cancel" id="song-modal-cancel" type="button">Cancel</button>
+      <button class="song-modal-btn save"   id="song-modal-save"   type="button">Save</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- PARENTS / RESOURCES (adult version only) -->
+<section class="panel" id="parents">
+  <div class="section-intro">
+    Tools, programs, equipment, and a Sarah-PT integration plan — for the grownups supporting Nicolas's football journey.
+  </div>
+
+  <div class="resource-block">
+    <h3>🏈 Local programs near Marion, MA</h3>
+    <p>Backyard catch with Daddy is the right place to start. When Nicolas wants more, these are good local options — all <strong>flag football</strong> (no tackle for this age):</p>
+    <ul>
+      <li><strong>Old Rochester Youth Football</strong> — flag league for K–6 serving Marion, Mattapoisett, and Rochester. Fall season.</li>
+      <li><strong>South Coast Flag Football</strong> — regional flag league with various age divisions.</li>
+      <li><strong>NFL FLAG</strong> — the national NFL-sponsored youth flag program; has affiliated leagues in the SouthCoast region.</li>
+      <li><strong>Belmont Hill Club</strong> — check for youth flag/touch football clinics, especially in the fall.</li>
+      <li><strong>i9 Sports SouthCoast</strong> — kid-first flag football with an emphasis on fundamentals and fun.</li>
+    </ul>
+    <p style="margin-top:0.7rem"><strong>Important:</strong> do not enroll in tackle football at this age. The American Academy of Pediatrics recommends flag through at least age 14 to protect developing brains and joints. Flag is the right move.</p>
+  </div>
+
+  <div class="resource-block">
+    <h3>🇺🇸 NFL FLAG &amp; USA Football</h3>
+    <ul>
+      <li><strong>NFL FLAG</strong> — <a href="https://nflflag.com/" target="_blank" rel="noopener">nflflag.com</a>. The NFL's youth flag program. Skill videos, parent guides, league locator.</li>
+      <li><strong>USA Football</strong> — <a href="https://usafootball.com/" target="_blank" rel="noopener">usafootball.com</a>. National governing body. The free "Football Development Model" coaching course is excellent — even for backyard Daddy-coaches.</li>
+      <li><strong>Heads Up Football</strong> — USA Football's safety-first program. Worth reading even if you only play flag.</li>
+    </ul>
+  </div>
+
+  <div class="resource-block">
+    <h3>🏃 Integrating Sarah PT with football</h3>
+    <p>Sarah's PT work pairs really well with football — it's organized sprinting, cutting, catching, and throwing.</p>
+    <ul>
+      <li><strong>Throwing mechanics.</strong> The spiral requires hip rotation, shoulder mobility, and core engagement firing in sequence. Sarah can evaluate Nicolas's throwing motion — small adjustments early prevent shoulder issues later.</li>
+      <li><strong>Cutting and route running.</strong> Sharp cuts on slants and outs require knee tracking and decel control. Sarah's the expert. Apply her cueing during route work.</li>
+      <li><strong>Catching mechanics.</strong> Soft hands, eyes on the ball, hand-eye coordination. Pair her catching reps with the "Soft Hands" warm-up drill.</li>
+      <li><strong>Backpedal &amp; defensive footwork.</strong> Hard on hips and ankles. Sarah can prescribe single-leg balance and ankle-strengthening work.</li>
+      <li><strong>Breathing during effort.</strong> Football is anaerobic — short sprints, then rest between plays. Given the respiratory symptoms being investigated, this is actually a GOOD sport for Nicolas: built-in rest between plays. Pair Sarah's breath work with the between-play resets.</li>
+      <li><strong>Share the warm-up menu.</strong> Print the 10 moves from this guide. Sarah can suggest which to emphasize and what to add.</li>
+    </ul>
+    <p style="margin-top:0.7rem"><strong>Bonus framing:</strong> let Nicolas know that Sarah's PT work helps him throw further, cut sharper, and stay on the field longer.</p>
+  </div>
+
+  <div class="resource-block">
+    <h3>🥾 Equipment for flag football</h3>
+    <ul>
+      <li><strong>Football size.</strong> <strong>K2</strong> (smallest) for ages 6–9. <strong>TDJ</strong> (junior) for 10–12. Adult size NOT until 13+. Wrong size makes throwing form impossible.</li>
+      <li><strong>Mouthguard.</strong> Required by most flag leagues. Always boil-and-bite for fit. Replace yearly.</li>
+      <li><strong>Cleats.</strong> Soccer cleats work for flag (rubber molded, not metal). Mid-cut gives ankle support.</li>
+      <li><strong>Flag belt.</strong> League will provide or sell one. Get an extra for backyard practice — they break.</li>
+      <li><strong>Receiver gloves (optional).</strong> Sticky-palmed gloves help with catching. Worth $15 once form is good.</li>
+      <li><strong>Practice football at home.</strong> Always have a ball near the door.</li>
+    </ul>
+  </div>
+
+  <div class="resource-block">
+    <h3>📺 YouTube channels worth bookmarking</h3>
+    <ul>
+      <li><strong>NFL FLAG</strong> — official channel, kid-friendly</li>
+      <li><strong>MOJO</strong> — youth flag drill videos</li>
+      <li><strong>QB School</strong> — QB fundamentals, kid-appropriate</li>
+      <li><strong>Coach Holliday Football</strong> — clear youth drills</li>
+      <li><strong>NFL YouTube</strong> — when Nicolas wants to watch the pros</li>
+    </ul>
+  </div>
+
+  <div class="resource-block">
+    <h3>📚 Books for parents</h3>
+    <ul>
+      <li><strong><em>The Essential Smart Football</em></strong> by Chris Brown — for the strategy-curious parent</li>
+      <li><strong><em>The Coach's Way: Coaching Youth Football</em></strong> — practical, kid-first</li>
+      <li><strong>The Patriots-themed kids' books</strong> if Nicolas is leaning into local fandom</li>
+    </ul>
+  </div>
+
+  <div class="resource-block">
+    <h3>🧠 Nicolas-Specific Suggestions</h3>
+    <ul>
+      <li><strong>Pre-practice routine.</strong> Same words, same order. "Mouthguard. Cleats. Water. Ball. Backyard."</li>
+      <li><strong>Built-in rest is a feature.</strong> Football has natural pauses between plays. Use them. Given the respiratory symptoms being investigated, this is one of the better sport choices — breathe between every snap.</li>
+      <li><strong>Breathing awareness during sprints.</strong> Pair Sarah's breath work with route running. Exhale long on the sprint.</li>
+      <li><strong>Pre-practice snack.</strong> 60 min after eating works best. Familiar safe foods.</li>
+      <li><strong>Visual schedule on the practice bag.</strong> Same as the other sports.</li>
+      <li><strong>End every practice on a catch.</strong> Don't let the last throw be a drop.</li>
+      <li><strong>Film the wins.</strong> Quick clips from the backyard.</li>
+      <li><strong>Watch a Patriots game together.</strong> A great way to introduce real football. Pause to explain things.</li>
+    </ul>
+  </div>
+
+  <div class="pull-quote">
+    Football is not just a sport. It's a 45-minute practice in self-regulation, motor planning, hand-eye coordination, communication, teamwork, and joyful effort. The American backyard classic — every front lawn, every fall afternoon. Every practice is a developmental gift.
+  </div>
+
+  <p style="text-align:center; margin-top:2rem; font-family:'Fraunces',serif; font-style:italic; color:var(--ink-soft)">— Built with love for Nicolas —</p>
+</section>
+
+</main>
+
+<!-- IN-APP VIDEO PLAYER OVERLAY -->
+<div id="video-overlay" role="dialog" aria-label="Video player">
+  <div id="video-overlay-bar">
+    <button id="video-overlay-back" type="button" aria-label="Go back to the playbook">
+      <span aria-hidden="true">←</span> Back to Playbook
+    </button>
+    <div id="video-overlay-title"></div>
+    <div style="width: 1px"></div>
+  </div>
+  <div id="video-overlay-frame-wrap">
+    <iframe id="video-overlay-frame" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+</div>
+
+<!-- PWA INSTALL HINT (shows once, only on iPad/iPhone Safari, not in installed PWA) -->
+<div id="install-hint" style="display:none; position:fixed; bottom:1rem; left:1rem; right:1rem; background:var(--grass-deep); color:var(--cream); padding:1rem 1.25rem; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.25); z-index:9999; font-size:0.95rem; max-width:520px; margin:0 auto;">
+  <div style="display:flex; align-items:flex-start; gap:0.75rem;">
+    <div style="flex:1;">
+      <strong style="font-family:'Fraunces',serif; font-size:1.1rem;">Install Nicolas's Football</strong>
+      <p style="margin:0.4rem 0 0; line-height:1.4;">Tap <span style="display:inline-block; padding:0.1rem 0.4rem; background:rgba(255,255,255,0.18); border-radius:5px;">Share <span aria-hidden="true">⬆️</span></span> then <strong>"Add to Home Screen"</strong> for the full app experience.</p>
+    </div>
+    <button onclick="document.getElementById('install-hint').style.display='none'; localStorage.setItem('hideInstallHint','1')" style="background:transparent; color:var(--cream); border:1px solid rgba(255,255,255,0.4); border-radius:8px; padding:0.4rem 0.8rem; cursor:pointer; font-size:0.85rem; font-weight:600;">Got it</button>
+  </div>
+</div>
+
+<script>
+  // ============ TAB SWITCHING ============
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      panels.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const id = t.dataset.tab;
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+  });
+
+  // ============ IN-APP VIDEO PLAYER ============
+  // Intercepts all video links and opens them in a contained overlay with a "Back" button
+  const overlay = document.getElementById('video-overlay');
+  const overlayFrame = document.getElementById('video-overlay-frame');
+  const overlayTitle = document.getElementById('video-overlay-title');
+  const overlayBack = document.getElementById('video-overlay-back');
+
+  function youtubeEmbedUrl(url) {
+    // Convert YouTube watch/short URLs to embed URLs that play inline
+    let videoId = null;
+    const watchMatch = url.match(/[?&]v=([A-Za-z0-9_-]+)/);
+    const shortMatch = url.match(/youtube\.com\/shorts\/([A-Za-z0-9_-]+)/);
+    const youtuMatch = url.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
+    if (watchMatch) videoId = watchMatch[1];
+    else if (shortMatch) videoId = shortMatch[1];
+    else if (youtuMatch) videoId = youtuMatch[1];
+    if (!videoId) return null;
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1&modestbranding=1`;
+  }
+
+  function isVideoLink(a) {
+    if (!a || !a.href) return false;
+    const href = a.href;
+    return /youtube\.com|youtu\.be/.test(href) || a.classList.contains('wk-vid') || a.classList.contains('game-vid') || a.classList.contains('video-link');
+  }
+
+  function openVideo(url, title) {
+    const embed = youtubeEmbedUrl(url);
+    if (!embed) {
+      // Fallback for non-YouTube videos: open in new tab (rare in this app)
+      window.open(url, '_blank');
+      return;
+    }
+    overlayFrame.src = embed;
+    overlayTitle.textContent = title || 'Football video';
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideo() {
+    overlay.classList.remove('show');
+    overlayFrame.src = ''; // stop the video
+    document.body.style.overflow = '';
+  }
+
+  overlayBack.addEventListener('click', closeVideo);
+
+  // Close on escape key (for desktop/keyboard users)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('show')) {
+      closeVideo();
+    }
+  });
+
+  // Intercept all video link clicks
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    if (a.closest('#video-overlay')) return; // ignore clicks inside overlay
+    // Skip Suno song links — those should still open externally
+    if (/suno\.com/.test(a.href)) return;
+    if (isVideoLink(a)) {
+      e.preventDefault();
+      const title = a.textContent.trim().replace(/^▶\s*/, '');
+      openVideo(a.href, title);
+    }
+  });
+
+  // ============ PWA INSTALL HINT ============
+  // Show install hint to iOS Safari users who haven't installed yet
+  function isiOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+  function isStandalone() {
+    return window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+  }
+  if (isiOS() && !isStandalone() && !localStorage.getItem('hideInstallHint')) {
+    setTimeout(() => {
+      document.getElementById('install-hint').style.display = 'block';
+    }, 1500);
+  }
+
+  // ============ SERVICE WORKER (for offline use) ============
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {/* silent fail */});
+    });
+  }
+</script>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'songs-football-nicolas';
+  var GRADIENT = 'linear-gradient(135deg, #4a7c2c, #2d4a1b)';
+
+  function getSongs() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    catch(e) { return []; }
+  }
+  function saveSongs(songs) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(songs)); return true; }
+    catch(e) { alert('Could not save. Storage may be full or unavailable.'); return false; }
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function render() {
+    var container = document.getElementById('user-songs-list');
+    if (!container) return;
+    var songs = getSongs();
+    if (!songs.length) {
+      container.innerHTML = '<p class="user-songs-empty">No songs yet — tap "Add a Suno Song" to add your first one.</p>';
+      return;
+    }
+    var html = '<h3 style="margin-top:1.4rem; margin-bottom:0.6rem">Your Songs</h3>';
+    html += '<div class="card-grid">';
+    songs.forEach(function(s) {
+      html += '<div class="card song-card">';
+      html += '<div class="card-icon" style="background:' + GRADIENT + '; color:#fff">🎵</div>';
+      html += '<h3>' + esc(s.title) + '</h3>';
+      html += '<a class="play-button" href="' + esc(s.url) + '" target="_blank" rel="noopener"><span class="icon">▶</span> Play on Suno</a>';
+      html += '<button class="song-card-remove" data-id="' + esc(String(s.id)) + '" type="button">× Remove</button>';
+      html += '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+    Array.prototype.forEach.call(container.querySelectorAll('.song-card-remove'), function(btn) {
+      btn.addEventListener('click', function() {
+        var id = btn.getAttribute('data-id');
+        var song = getSongs().filter(function(s) { return String(s.id) === id; })[0];
+        if (song && confirm('Remove "' + song.title + '"?')) {
+          saveSongs(getSongs().filter(function(s) { return String(s.id) !== id; }));
+          render();
+        }
+      });
+    });
+  }
+  function show() {
+    document.getElementById('song-title-input').value = '';
+    document.getElementById('song-url-input').value = '';
+    document.getElementById('song-modal').hidden = false;
+    setTimeout(function() {
+      var t = document.getElementById('song-title-input');
+      if (t) t.focus();
+    }, 50);
+  }
+  function hide() {
+    document.getElementById('song-modal').hidden = true;
+  }
+  function save() {
+    var title = document.getElementById('song-title-input').value.trim();
+    var url = document.getElementById('song-url-input').value.trim();
+    if (!title) { alert('Please enter a song title.'); return; }
+    if (!url) { alert('Please paste a Suno URL.'); return; }
+    if (!/^https?:\/\//i.test(url)) { alert('URL must start with http:// or https://'); return; }
+    var songs = getSongs();
+    songs.push({ id: Date.now(), title: title, url: url });
+    if (saveSongs(songs)) { hide(); render(); }
+  }
+  function init() {
+    var b = document.getElementById('add-song-btn'); if (b) b.addEventListener('click', show);
+    var c = document.getElementById('song-modal-cancel'); if (c) c.addEventListener('click', hide);
+    var s = document.getElementById('song-modal-save'); if (s) s.addEventListener('click', save);
+    var m = document.getElementById('song-modal');
+    if (m) m.addEventListener('click', function(e) { if (e.target === m) hide(); });
+    render();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else { init(); }
+})();
+</script>
+
+</body>
+</html>

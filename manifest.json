@@ -1,0 +1,15 @@
+{
+  "name": "Nicolas's Football",
+  "short_name": "Football",
+  "description": "Nicolas's complete football playbook — field, rules, skills, plays, games, and songs",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f8f4ea",
+  "theme_color": "#6B4520",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
