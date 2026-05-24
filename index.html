@@ -6,17 +6,17 @@
 <title>Nicolas's Football</title>
 
 <!-- PWA - Installable app on iPad / iPhone home screen -->
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+
+
 <meta name="apple-mobile-web-app-title" content="Football" />
-<meta name="theme-color" content="#6B4520" />
+<meta name="theme-color" content="#2d4a1b" />
 <meta name="format-detection" content="telephone=no" />
 
 <!-- App icons (inline SVG, base64-encoded so no separate files needed) -->
-<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM3ZmIwNjkiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyZDRhMmIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiByeT0iNDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSI1MCIgZmlsbD0iI2Q0ZGQyYiIvPjxwYXRoIGQ9Ik00MCA5MCBRIDkwIDQwIDE0MCA5MCIgc3Ryb2tlPSIjZmFmNmU5IiBzdHJva2Utd2lkdGg9IjMuNSIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik00MCA5MCBRIDkwIDE0MCAxNDAgOTAiIHN0cm9rZT0iI2ZhZjZlOSIgc3Ryb2tlLXdpZHRoPSIzLjUiIGZpbGw9Im5vbmUiLz48L3N2Zz4=" />
+
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM3ZmIwNjkiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyZDRhMmIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiByeT0iNDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSI1MCIgZmlsbD0iI2Q0ZGQyYiIvPjxwYXRoIGQ9Ik00MCA5MCBRIDkwIDQwIDE0MCA5MCIgc3Ryb2tlPSIjZmFmNmU5IiBzdHJva2Utd2lkdGg9IjMuNSIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik00MCA5MCBRIDkwIDE0MCAxNDAgOTAiIHN0cm9rZT0iI2ZhZjZlOSIgc3Ryb2tlLXdpZHRoPSIzLjUiIGZpbGw9Im5vbmUiLz48L3N2Zz4=" />
-<link rel="manifest" href="manifest.json" />
+
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -936,27 +936,243 @@
 }
 .song-card-remove:hover { color: #c73e3a; }
 
+
+/* ===== iPad / iOS scroll & touch fixes ===== */
+html {
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+}
+body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+/* Prevent horizontal-scroll on tab nav from capturing vertical scroll */
+nav.tabs {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
+}
+/* Make sticky nav less aggressive on small screens / iPads */
+@media (max-width: 900px) {
+  nav.tabs {
+    position: relative !important;
+    top: auto !important;
+  }
+}
+/* Bigger tap targets on tab buttons */
+.tab-btn {
+  min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* Ensure modal/overlay never blocks scroll once closed (legacy) */
+[hidden] { display: none !important; }
+/* Disable user-select on tab buttons to prevent text selection on long tap */
+.tab-btn { -webkit-user-select: none; user-select: none; }
+
+
+/* ===== Song manager (inline form, iPad-friendly) ===== */
+.song-add-inline {
+  background: linear-gradient(135deg, var(--cream-deep, #f0eada), #fff);
+  border: 2px solid var(--brass, #c9a91f);
+  border-radius: 18px;
+  padding: 1.2rem 1.1rem;
+  margin: 1rem 0 1.5rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+.song-add-inline h3 { margin: 0 0 0.75rem; font-size: 1.15rem; }
+.song-add-inline-row { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0.6rem; }
+.song-add-inline label {
+  font-weight: 700;
+  color: var(--ink, #2c2818);
+  font-size: 0.95rem;
+}
+.song-add-inline input {
+  width: 100%;
+  padding: 0.9rem 0.85rem;
+  font-size: 17px; /* prevents iOS zoom-in on focus */
+  font-family: inherit;
+  border: 2px solid var(--ink-soft, #6b6754);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink, #2c2818);
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 48px;
+}
+.song-add-inline input:focus {
+  outline: none;
+  border-color: var(--brass, #c9a91f);
+  box-shadow: 0 0 0 3px rgba(201,169,31,0.18);
+}
+.song-add-inline-btn {
+  background: linear-gradient(135deg, #4a9c8f, #2d6e63);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.95rem 1.4rem;
+  font-size: 17px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  min-height: 50px;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.song-add-inline-btn:active { transform: translateY(1px); }
+.song-add-inline-status {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  min-height: 1.4em;
+  padding: 0.4rem 0;
+  font-weight: 600;
+}
+.song-add-inline-status.success { color: #2d6e63; }
+.song-add-inline-status.error { color: #c73e3a; }
+
+/* Song cards in user list */
+.user-songs-empty {
+  text-align: center;
+  color: var(--ink-soft, #6b6754);
+  font-style: italic;
+  padding: 1rem;
+}
+.song-card-play {
+  display: inline-block;
+  background: linear-gradient(135deg, #4a9c8f, #2d6e63);
+  color: #fff;
+  text-decoration: none;
+  padding: 0.85rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 0.4rem;
+  min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  width: auto;
+  text-align: center;
+}
+.song-card-play:active { transform: translateY(1px); }
+.song-card-remove {
+  display: block;
+  margin-top: 0.6rem;
+  background: transparent;
+  color: var(--ink-soft, #6b6754);
+  border: 1.5px solid var(--ink-soft, #6b6754);
+  border-radius: 10px;
+  padding: 0.55rem 0.95rem;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  min-height: 40px;
+  -webkit-tap-highlight-color: transparent;
+}
+.song-card-remove:active { transform: translateY(1px); }
+
+/* Hide old modal (we replace it but leave the markup safe) */
+.song-modal-overlay { display: none !important; }
+
+
+.sail-icon, .ball-icon, .kayak-icon, .sport-icon { display: none !important; }
+
+/* ===== Universal nav + fade gradient (consistency across all playbooks) ===== */
+nav.tabs {
+  position: relative;
+  background: var(--cream-deep, #f0eada);
+  border-bottom: 3px solid var(--navy, #1c3a5e);
+  z-index: 10;
+  /* Wrap container for fade gradient */
+}
+.tabs-scroll-container {
+  position: relative;
+  overflow: hidden;
+}
+.tabs-scroll-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 40px;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--cream-deep, #f0eada));
+  z-index: 2;
+}
+nav.tabs .tabs-inner {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+  padding: 0.5rem 0.4rem;
+  scrollbar-width: thin;
+}
+nav.tabs .tabs-inner::-webkit-scrollbar { height: 4px; }
+nav.tabs .tabs-inner::-webkit-scrollbar-track { background: transparent; }
+nav.tabs .tabs-inner::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15); border-radius: 2px;
+}
+
+/* Standardize tab button look across all apps */
+.tab-btn {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  color: var(--ink, #2c2818);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background 0.15s ease;
+}
+.tab-btn:hover { background: rgba(0,0,0,0.04); }
+.tab-btn.active {
+  background: var(--navy, #1c3a5e);
+  color: var(--cream, #f8f4ea);
+}
 </style>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
 
 <header class="top-banner">
-  <h1>Nicolas's Football Playbook <span class="ball-icon"></span></h1>
-  <p class="sub">A picture guide to the rules, the field, the strokes, and the joy of the game.</p>
+  <h1>Nicolas's Football Playbook</h1>
+  <p class="sub">A picture guide to the field, the throws, the catches, the rules, and the joy of the game.</p>
 </header>
 
-<nav class="tabs" aria-label="Sections">
+<nav class="tabs"><div class="tabs-scroll-container"><div class="tabs-inner">
   <div class="tab-list" role="tablist">
     <button class="tab-btn active" data-tab="welcome">🏁 Start Here</button>
     <button class="tab-btn" data-tab="field">🏈 The Field</button>
-    <button class="tab-btn" data-tab="rules">📋 Rules</button>
+    <button class="tab-btn" data-tab="rules">📋 Rules &amp; Safety</button>
     <button class="tab-btn" data-tab="skills">🎯 Skills &amp; Moves</button>
     <button class="tab-btn" data-tab="program">📅 Lesson Plans</button>
     <button class="tab-btn" data-tab="games">🎮 Fun Games</button>
     <button class="tab-btn" data-tab="story">📖 Football Story</button>
     <button class="tab-btn" data-tab="songs">🎵 Football Songs</button>
   </div>
-</nav>
+</div></div></nav>
 
 <main>
 
@@ -966,44 +1182,44 @@
     Welcome, Nicolas. You already know how to throw a ball. You've been chucking things at trees since you could walk. Now we're going to learn <em>the whole game</em> — every line on the field, the names of every move, how to score. Take your time. Look at the pictures. Watch a video. Try a drill. Football is not about being perfect. It's about getting curious, working the process, and finding joy in the catch. And the best part — football is a game you can love forever, whether you play it or watch the Patriots on Sundays.
   </div>
 
-  <h2>What's inside this playbook</h2>
-  <div class="card-grid" style="margin-top:1.2rem">
-    <div class="card">
-      <div class="card-icon">🏟️</div>
-      <h3>The Court</h3>
-      <p class="summary">A picture map of the football field with every line named — yard lines, end zones, goal posts.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">📋</div>
-      <h3>The Rules</h3>
-      <p class="summary">10 simple rules. One picture for each. Watch a short video to see it in action.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">🎯</div>
-      <h3>Skills &amp; Moves</h3>
-      <p class="summary">Forehand, backhand, serve, volley, overhead. How to grip, how to swing, how to follow through.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">📅</div>
-      <h3>Lesson Plans</h3>
-      <p class="summary">Four lesson formats that roll in over the year — one at a time. Same predictable shape every time, so what's inside can stay fresh. 30-min and 60-min versions for Daddy and Coach.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">🎮</div>
-      <h3>Fun Games</h3>
-      <p class="summary">12 silly, challenging, joyful games to play with Daddy or Coach when practice needs a smile.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">📖</div>
-      <h3>Your Football Story</h3>
-      <p class="summary">A picture story about going to football practice — what to expect, what to do, what to feel.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">🎵</div>
-      <h3>Football Songs</h3>
-      <p class="summary">Custom Suno songs made just for you. Listen before practice to get ready, or after a great game to celebrate. Add new ones anytime.</p>
-    </div>
+  <h2 style="margin: 2rem 0 1.2rem">What's inside this playbook</h2>
+<div class="card-grid welcome-cards-grid">
+  <div class="card">
+    <div class="card-icon" style="background: linear-gradient(135deg, var(--navy, #1c3a5e), var(--navy-deep, #0f2444)); color: var(--cream, #f8f4ea)">🏈</div>
+    <h3>The Field</h3>
+    <p class="summary">A picture map of a football field — end zones, yard lines, hash marks, goal posts. Every part labeled.</p>
   </div>
+  <div class="card">
+    <div class="card-icon" style="background: linear-gradient(135deg, var(--navy, #1c3a5e), var(--navy-deep, #0f2444)); color: var(--cream, #f8f4ea)">📋</div>
+    <h3>Rules &amp; Safety</h3>
+    <p class="summary">10 flag football rules. Snap. 4 downs. Flag-pull instead of tackle. Honors. The basics of the game.</p>
+  </div>
+  <div class="card">
+    <div class="card-icon" style="background: linear-gradient(135deg, var(--navy, #1c3a5e), var(--navy-deep, #0f2444)); color: var(--cream, #f8f4ea)">🎯</div>
+    <h3>Skills &amp; Moves</h3>
+    <p class="summary">Throwing a spiral. Catching with two hands. Running routes. Flag pulling. The snap. The moves every player knows.</p>
+  </div>
+  <div class="card">
+    <div class="card-icon" style="background: linear-gradient(135deg, var(--navy, #1c3a5e), var(--navy-deep, #0f2444)); color: var(--cream, #f8f4ea)">📅</div>
+    <h3>Lesson Plans</h3>
+    <p class="summary">Four lesson formats. From backyard catch to a real 5-on-5 flag football game.</p>
+  </div>
+  <div class="card">
+    <div class="card-icon" style="background: linear-gradient(135deg, var(--navy, #1c3a5e), var(--navy-deep, #0f2444)); color: var(--cream, #f8f4ea)">🎮</div>
+    <h3>Fun Games</h3>
+    <p class="summary">Brother games. 500. Two-hand touch. Hot potato football. Things to play any time.</p>
+  </div>
+  <div class="card">
+    <div class="card-icon" style="background: linear-gradient(135deg, var(--navy, #1c3a5e), var(--navy-deep, #0f2444)); color: var(--cream, #f8f4ea)">📖</div>
+    <h3>Your Football Story</h3>
+    <p class="summary">A picture story about a football practice day — what to expect, what to do, what to feel.</p>
+  </div>
+  <div class="card">
+    <div class="card-icon" style="background: linear-gradient(135deg, var(--navy, #1c3a5e), var(--navy-deep, #0f2444)); color: var(--cream, #f8f4ea)">🎵</div>
+    <h3>Football Songs</h3>
+    <p class="summary">Custom Suno songs made just for you. Listen before practice to get ready, or after a great game to celebrate.</p>
+  </div>
+</div>
 
   <div class="pull-quote">
     The best player is not the one with the most touchdowns. The best player is the one who keeps showing up, keeps trying, and remembers to smile after a great catch.
@@ -1166,65 +1382,112 @@
       <h3>1. The object of the game</h3>
       <p class="summary">Move the ball into the OTHER team's end zone = TOUCHDOWN (6 points). Most points wins. That's it.</p>
       <span class="cue">"Ball in their end zone."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=the+object+of+the+game+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">4️⃣</div>
       <h3>2. Four downs to move 10 yards</h3>
       <p class="summary">Your team gets 4 "downs" (tries) to move the ball 10 yards forward. If you make it = fresh set of 4 downs. If you don't = other team gets the ball.</p>
       <span class="cue">"4 tries. 10 yards."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=four+downs+to+move+10+yards+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🎽</div>
       <h3>3. Flags instead of tackles</h3>
       <p class="summary">In flag football, you wear a belt with two flags. To "tackle" someone, you pull off one of their flags. No grabbing jerseys, no shoving, no tackling.</p>
       <span class="cue">"Pull the flag. Don't tackle."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=flags+instead+of+tackles+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🏈</div>
       <h3>4. Snap starts every play</h3>
       <p class="summary">The center starts the play by snapping the ball backward through their legs to the quarterback. Until the snap, no one can cross the line of scrimmage.</p>
       <span class="cue">"No moving till the snap."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=snap+starts+every+play+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🎯</div>
       <h3>5. Pass or run</h3>
       <p class="summary">After the snap, the quarterback can: <strong>PASS</strong> the ball to a receiver, <strong>HAND IT OFF</strong> to a runner, or <strong>RUN</strong> with it. Pick the right play.</p>
       <span class="cue">"Pass, hand off, or run."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=pass+or+run+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🤲</div>
       <h3>6. Catching the pass</h3>
       <p class="summary">A pass is caught if BOTH feet are in bounds and you have the ball with control. Drop it, or step out = INCOMPLETE.</p>
       <span class="cue">"Two feet. Two hands."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=catching+the+pass+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🚫</div>
       <h3>7. Sideline = out</h3>
       <p class="summary">Step on or over the sideline WITH the ball = the play is over. Ball comes back to where you stepped out.</p>
       <span class="cue">"Step out = play over."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=sideline+out+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🏆</div>
       <h3>8. How scoring works</h3>
       <p class="summary"><strong>Touchdown</strong> (ball in end zone) = <strong>6 points</strong>. <strong>Extra point</strong> (run/pass it in from 5 yards) = <strong>1 point</strong>. (Field goals exist too, but most flag leagues skip them.)</p>
       <span class="cue">"6 + 1 = 7."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=how+scoring+works+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🚩</div>
       <h3>9. Penalties (no's)</h3>
       <p class="summary">No tackling. No blocking with hands. No flag-guarding (covering your flags with your arms). No crossing the line before the snap. Penalty = the team that fouled loses yards.</p>
       <span class="cue">"Play clean."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=penalties+nos+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🤝</div>
       <h3>10. Be a great teammate</h3>
       <p class="summary">Pass to the open person. Cheer for your teammates. Listen to the coach. Shake hands after the game — win or lose. Football is a team sport, even in the backyard.</p>
       <span class="cue">"Help. Cheer. Shake hands."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=be+a+great+teammate+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
-  </div>
+  
+      <a class="video-link" href="https://www.youtube.com/results?search_query=the+object+of+the+game+flag+football" target="_blank" rel="noopener">▶ Watch</a>
+    </div>
 
   <div class="pull-quote">
     Eleven on a side. Or seven on seven. Or two on two. Or just you and Daddy in the backyard. Football is anywhere there's a ball and a target.
+  </div>
+
+  <h3 style="margin: 2.5rem 0 0.8rem">Watch &amp; learn the rules</h3>
+  <p style="color:var(--ink-soft); margin-bottom:1rem">Short videos that explain how the game is played. Watch a couple before your first session.</p>
+  <div class="card-grid">
+  <div class="card">
+    <div class="card-icon">🎬</div>
+    <h3>Flag Football Rules</h3>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+rules+explained+kids" target="_blank" rel="noopener">▶ Watch</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">🎬</div>
+    <h3>Beginner Flag Football</h3>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=beginner+flag+football+tutorial" target="_blank" rel="noopener">▶ Watch</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">🎬</div>
+    <h3>Flag Football Drills</h3>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+drills+for+kids" target="_blank" rel="noopener">▶ Watch</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">🎬</div>
+    <h3>Flag Football Basics</h3>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+basics+for+parents" target="_blank" rel="noopener">▶ Watch</a>
+  </div>
   </div>
 </section>
 
@@ -1241,38 +1504,52 @@
       <h3>Throwing (Spiral)</h3>
       <p class="summary">Grip the ball with fingers across the laces. Step toward your target. Rotate your hips and shoulders. Release as your arm comes over the top. Snap the wrist — that's what makes the SPIRAL.</p>
       <span class="cue">"Laces. Step. Snap."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=throwing+spiral+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🤲</div>
       <h3>Catching</h3>
       <p class="summary">Two hands. Pinky fingers together for LOW passes (under your chest). Thumbs together for HIGH passes (above your chest). Look the ball INTO your hands. Then pull it tight.</p>
       <span class="cue">"Look it in. Tuck it."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=catching+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🏃</div>
       <h3>Running with the ball</h3>
       <p class="summary">Hold the ball TIGHT against your body with your strong arm. Cover both ends (one end in your hand, one in your armpit). Keep your other arm free for balance. Run hard.</p>
       <span class="cue">"Tuck it tight. Run hard."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=running+with+the+ball+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🎽</div>
       <h3>Pulling the flag</h3>
       <p class="summary">Get to the ball-carrier's hip area. Grab the FLAG (not the body). Pull straight away. Hold it up so the ref can see.</p>
       <span class="cue">"Flag, not body."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=pulling+the+flag+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🏃</div>
       <h3>Running routes</h3>
       <p class="summary">A "route" is the path a receiver runs after the snap. <strong>Slant:</strong> 3 steps forward, then cut at 45°. <strong>Out:</strong> straight then cut sideways. <strong>Post:</strong> straight then cut toward the goalpost. Plan it before the snap.</p>
       <span class="cue">"Run the route I planned."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=running+routes+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">⬇️</div>
       <h3>The snap (center exchange)</h3>
       <p class="summary">The center holds the ball, bends over, and PUSHES it backward through their legs to the quarterback. Quarterback catches it and starts the play.</p>
       <span class="cue">"Center to QB."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=the+snap+center+exchange+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
-  </div>
+  
+      <a class="video-link" href="https://www.youtube.com/results?search_query=kids+flag+football+throwing+spiral+tutorial" target="_blank" rel="noopener">▶ Watch</a>
+    </div>
 
   <h3 style="margin:2rem 0 0.8rem">The Football Grip (for throwing)</h3>
   <div class="card">
@@ -1305,32 +1582,132 @@
       <h3>See it</h3>
       <p class="summary">As soon as the ball leaves the QB's hand, find it in the air. Watch only the ball.</p>
       <span class="cue">"Find it."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=see+it+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">2️⃣</div>
       <h3>Move</h3>
       <p class="summary">Get your body in line with where the ball will land. Small fast steps.</p>
       <span class="cue">"Get under it."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=move+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">3️⃣</div>
       <h3>Hands</h3>
       <p class="summary">Two hands. Pinkies together for low passes; thumbs together for high passes.</p>
       <span class="cue">"Make the diamond."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=hands+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">4️⃣</div>
       <h3>Catch</h3>
       <p class="summary">Look the ball INTO your hands. Soft hands — give a little as it arrives.</p>
       <span class="cue">"Look it in."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=catch+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">5️⃣</div>
       <h3>Tuck &amp; run</h3>
       <p class="summary">Pull the ball tight to your body, cover both ends, then RUN.</p>
       <span class="cue">"Tuck. Then go."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=tuck+run+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
+  
+      <a class="video-link" href="https://www.youtube.com/results?search_query=see+it+flag+football" target="_blank" rel="noopener">▶ Watch</a>
+    </div>
+
+<h3 style="margin: 2.5rem 0 0.8rem">The Positions (5-on-5 flag football)</h3>
+<p style="color:var(--ink-soft); margin-bottom:1rem">Flag football is simpler than tackle football, but the basic positions still apply. Most kids try every position at first.</p>
+<div class="card-grid">
+  <div class="card">
+    <div class="card-icon">🎯</div>
+    <h3>Quarterback (QB)</h3>
+    <p class="summary">The thrower. Starts every play. Calls "set, hike!" Takes the snap, then either throws or runs (if rules allow).</p>
+    <span class="cue">"I make the play happen."</span>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+quarterback+basics+kids" target="_blank" rel="noopener">▶ Watch QB basics</a>
   </div>
+  <div class="card">
+    <div class="card-icon">🤝</div>
+    <h3>Center (C)</h3>
+    <p class="summary">Snaps the ball to the QB. Hikes it BETWEEN your legs (or hands it back). Important: once you snap, you can also run a route.</p>
+    <span class="cue">"Set. Hike. Then go."</span>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+center+snap+technique" target="_blank" rel="noopener">▶ Watch the snap</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">🏃</div>
+    <h3>Wide Receiver (WR)</h3>
+    <p class="summary">The catcher. Lines up on the sideline before the snap. Runs a route. Catches the ball when the QB throws it.</p>
+    <span class="cue">"Run my route. Look for the ball."</span>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+wide+receiver+routes+kids" target="_blank" rel="noopener">▶ Watch routes</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">💨</div>
+    <h3>Running Back (RB)</h3>
+    <p class="summary">The runner. Lines up next to the QB. Takes a handoff or pitch. Runs with the ball. (Less common in flag football.)</p>
+    <span class="cue">"Take the ball. Find a hole."</span>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+running+back+kids" target="_blank" rel="noopener">▶ Watch running back</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">🛡️</div>
+    <h3>Rusher</h3>
+    <p class="summary">The defensive player who tries to reach the QB. Must start 7+ yards away on the snap. Goal: pull the QB's flag before they throw.</p>
+    <span class="cue">"Count 1-2-3-4-5, then rush."</span>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+rusher+rules+kids" target="_blank" rel="noopener">▶ Watch the rush</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">👀</div>
+    <h3>Defender / DB</h3>
+    <p class="summary">The receiver-stopper. Stays with a WR or watches for the run. Pulls flags. The hardest position to play well.</p>
+    <span class="cue">"Stay with my person."</span>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+defense+coverage+kids" target="_blank" rel="noopener">▶ Watch coverage</a>
+  </div>
+</div>
+
+<h3 style="margin: 2.5rem 0 0.8rem">Common Routes (the patterns receivers run)</h3>
+<p style="color:var(--ink-soft); margin-bottom:1rem">A "route" is the path the receiver runs after the snap. Each route has a name. Knowing them helps everyone on the team line up.</p>
+<div class="card-grid">
+  <div class="card">
+    <div class="card-icon">➡️</div>
+    <h3>Slant</h3>
+    <p class="summary">Run 3 steps forward. Then cut at a 45° angle TOWARD the middle of the field. Quick, easy catch. The bread-and-butter route.</p>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+slant+route" target="_blank" rel="noopener">▶ Watch the slant</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">↗️</div>
+    <h3>Out</h3>
+    <p class="summary">Run 5 steps forward. Then cut 90° toward the SIDELINE. Get out of bounds quick if needed.</p>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+out+route" target="_blank" rel="noopener">▶ Watch the out</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">⬆️</div>
+    <h3>Post</h3>
+    <p class="summary">Run straight up the field. Around 8-10 steps, cut DIAGONALLY toward the goalpost. Deep, dramatic — the big-play route.</p>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+post+route" target="_blank" rel="noopener">▶ Watch the post</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">🚀</div>
+    <h3>Fade / Go</h3>
+    <p class="summary">Just RUN. Straight up the sideline. Fast as you can. Don't look back until 3 seconds. The home-run ball.</p>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+fade+route+go+route" target="_blank" rel="noopener">▶ Watch the fade</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">🪝</div>
+    <h3>Curl / Hook</h3>
+    <p class="summary">Run 5-7 steps forward. Then STOP and turn around to face the QB. Catches are easier when you're facing the ball.</p>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+curl+route" target="_blank" rel="noopener">▶ Watch the curl</a>
+  </div>
+  <div class="card">
+    <div class="card-icon">🔄</div>
+    <h3>Comeback</h3>
+    <p class="summary">Run 10 steps forward FAST. Plant your foot, turn around, run back 2 steps toward QB. Beats defenders who think you're going deep.</p>
+    <a class="video-link" href="https://www.youtube.com/results?search_query=flag+football+comeback+route" target="_blank" rel="noopener">▶ Watch the comeback</a>
+  </div>
+</div>
 </section>
 
 <!-- 52-WEEK PROGRAM -->
@@ -1623,68 +2000,92 @@
       <h3>Two-Hand Touch</h3>
       <p class="summary">Simpler than flag football — no flags needed. Two hands touch the ball-carrier below the shoulders = tackled. Otherwise same as flag.</p>
       <span class="cue">"Two-hand tag."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=twohand+touch+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🎯</div>
       <h3>Tire Throw (Target Practice)</h3>
       <p class="summary">Hang a tire from a tree (or use a hula hoop on a stand). Stand 10 yards away. Throw the football THROUGH the tire. 10 throws, count makes.</p>
       <span class="cue">"Aim. Spiral. Through."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=tire+throw+target+practice+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🏃</div>
       <h3>Hot Potato Football</h3>
       <p class="summary">Stand in a circle. Pass the ball as fast as possible. Drop it = you're out. Last one wins.</p>
       <span class="cue">"Soft hands. Fast pass."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=hot+potato+football+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🚧</div>
       <h3>Cone Routes</h3>
       <p class="summary">Set up cones for slants, outs, posts. Run each route in turn. Daddy throws to the spot where the route ends.</p>
       <span class="cue">"Sharp cuts. Look back."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=cone+routes+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🎽</div>
       <h3>Flag Tag</h3>
       <p class="summary">Wear flag belts. No ball. Just chase each other and pull flags. Last one with both flags wins.</p>
       <span class="cue">"Flag, not body."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=flag+tag+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🚦</div>
       <h3>Red Light, Green Light Football</h3>
       <p class="summary">Daddy says "green!" — you sprint with the ball. "Red!" — STOP. "Yellow!" — slow motion. Builds ball control under pressure.</p>
       <span class="cue">"Stop on red."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=red+light+green+light+football+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🏆</div>
       <h3>Touchdown Race</h3>
       <p class="summary">Daddy and Nicolas line up at the goal line. Daddy throws the ball downfield. Whoever catches it RUNS to the opposite goal line. Defender tries to pull the flag.</p>
       <span class="cue">"Catch, then sprint."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=touchdown+race+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🤲</div>
       <h3>Pop Pass Rally</h3>
       <p class="summary">Cooperative game. Quick short pops back and forth, 5 yards apart. How many in a row without dropping?</p>
       <span class="cue">"Soft hands. Beat our record."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=pop+pass+rally+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">⏱️</div>
       <h3>Beat the Clock</h3>
       <p class="summary">60 seconds. How many "completions" (caught passes) can Daddy throw to Nicolas? Beat the score each week.</p>
       <span class="cue">"Fast hands."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=beat+the+clock+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🥄</div>
       <h3>Pass &amp; Spot</h3>
       <p class="summary">Each catch, you "spot" the ball where you caught it. Try to make it to a target (tree, end zone) in 5 catches.</p>
       <span class="cue">"Move the ball forward."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=pass+spot+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
     <div class="card">
       <div class="card-icon">🧱</div>
       <h3>Wall Spiral (Indoor)</h3>
       <p class="summary">Rainy day? Throw a small football against a wall, catch the rebound. Build the wrist snap.</p>
       <span class="cue">"Snap the wrist."</span>
+    
+      <a class="video-link" href="https://www.youtube.com/results?search_query=wall+spiral+indoor+flag+football" target="_blank" rel="noopener">▶ Watch</a>
     </div>
-  </div>
+  
+      <a class="video-link" href="https://www.youtube.com/results?search_query=two+hand+touch+football+kids+backyard" target="_blank" rel="noopener">▶ Watch</a>
+    </div>
 
   <h3 style="margin: 2rem 0 0.7rem">Watch fun football games in action</h3>
   <div class="card-grid">
@@ -1814,8 +2215,27 @@
     Music is part of the practice. Songs help Nicolas preview what's coming, regulate his body between blocks, and celebrate the joy of a great catch. Tap to play. Add new ones any time.
   </div>
 <div class="user-songs-section">
-  <button class="add-song-btn" id="add-song-btn" type="button">+ Add a Suno Song</button>
-  <div id="user-songs-list"></div>
+  
+<div class="card song-add-inline" id="song-add-inline">
+  <h3>🎵 Add a Suno Song</h3>
+  <p style="margin: 0 0 0.85rem; color: var(--ink-soft, #6b6754); font-size: 0.95rem;">
+    Made a song on Suno? Paste the share link here so it lives in your playlist forever.
+  </p>
+  <div class="song-add-inline-row">
+    <label for="song-title-input">Song Title</label>
+    <input type="text" id="song-title-input" placeholder="e.g. My Hype Song" autocomplete="off" autocapitalize="words" />
+  </div>
+  <div class="song-add-inline-row">
+    <label for="song-url-input">Suno URL</label>
+    <input type="url" id="song-url-input" placeholder="https://suno.com/s/..." autocomplete="off" autocapitalize="none" inputmode="url" />
+  </div>
+  <button class="song-add-inline-btn" id="song-add-inline-btn" type="button">Add to Playlist</button>
+  <div class="song-add-inline-status" id="song-add-status" role="status" aria-live="polite"></div>
+</div>
+<div id="user-songs-list"></div>
+
+
+  
 </div>
 
 
@@ -1884,21 +2304,6 @@
 </section>
 
 
-
-<div class="song-modal-overlay" id="song-modal" hidden>
-  <div class="song-modal-box" role="dialog" aria-modal="true" aria-labelledby="song-modal-title">
-    <h3 id="song-modal-title">Add a Suno Song</h3>
-    <label class="song-modal-label" for="song-title-input">Song Title</label>
-    <input type="text" id="song-title-input" placeholder="e.g. Hype Song" autocomplete="off">
-    <label class="song-modal-label" for="song-url-input">Suno URL</label>
-    <input type="url" id="song-url-input" placeholder="https://suno.com/s/...">
-    <p class="song-modal-hint">Paste the share link from Suno (the URL of the song page).</p>
-    <div class="song-modal-actions">
-      <button class="song-modal-btn cancel" id="song-modal-cancel" type="button">Cancel</button>
-      <button class="song-modal-btn save"   id="song-modal-save"   type="button">Save</button>
-    </div>
-  </div>
-</div>
 
 </main>
 
@@ -2033,9 +2438,11 @@
 </script>
 
 <script>
-(function() {
+(function(){
+  // === Robust Suno song manager ===
+  // Inline form (no modal), works in PWA standalone mode on iPad.
   var STORAGE_KEY = 'songs-football-nicolas';
-  var GRADIENT = 'linear-gradient(135deg, #4a7c2c, #2d4a1b)';
+  var GRADIENT = 'linear-gradient(135deg, #4a9c8f, #2d6e63)';
 
   function getSongs() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
@@ -2043,33 +2450,47 @@
   }
   function saveSongs(songs) {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(songs)); return true; }
-    catch(e) { alert('Could not save. Storage may be full or unavailable.'); return false; }
+    catch(e) { return false; }
   }
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function(c) {
       return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
     });
   }
+  function openSong(url) {
+    // Works in PWA standalone mode on iOS too
+    try {
+      var w = window.open(url, '_blank', 'noopener');
+      if (!w || w.closed || typeof w.closed === 'undefined') {
+        window.location.href = url;
+      }
+    } catch(e) {
+      window.location.href = url;
+    }
+  }
   function render() {
     var container = document.getElementById('user-songs-list');
     if (!container) return;
     var songs = getSongs();
     if (!songs.length) {
-      container.innerHTML = '<p class="user-songs-empty">No songs yet — tap "Add a Suno Song" to add your first one.</p>';
+      container.innerHTML = '<p class="user-songs-empty">No songs added yet — paste a Suno link above to add your first one.</p>';
       return;
     }
-    var html = '<h3 style="margin-top:1.4rem; margin-bottom:0.6rem">Your Songs</h3>';
-    html += '<div class="card-grid">';
+    var h = '<h3 style="margin-top:1.4rem; margin-bottom:0.6rem">Your Songs</h3>';
+    h += '<div class="card-grid">';
     songs.forEach(function(s) {
-      html += '<div class="card song-card">';
-      html += '<div class="card-icon" style="background:' + GRADIENT + '; color:#fff">🎵</div>';
-      html += '<h3>' + esc(s.title) + '</h3>';
-      html += '<a class="play-button" href="' + esc(s.url) + '" target="_blank" rel="noopener"><span class="icon">▶</span> Play on Suno</a>';
-      html += '<button class="song-card-remove" data-id="' + esc(String(s.id)) + '" type="button">× Remove</button>';
-      html += '</div>';
+      h += '<div class="card song-card">';
+      h += '<div class="card-icon" style="background:' + GRADIENT + '; color:#fff">🎵</div>';
+      h += '<h3>' + esc(s.title) + '</h3>';
+      h += '<button class="song-card-play" data-url="' + esc(s.url) + '" type="button">▶ Play on Suno</button>';
+      h += '<button class="song-card-remove" data-id="' + esc(String(s.id)) + '" type="button">× Remove</button>';
+      h += '</div>';
     });
-    html += '</div>';
-    container.innerHTML = html;
+    h += '</div>';
+    container.innerHTML = h;
+    Array.prototype.forEach.call(container.querySelectorAll('.song-card-play'), function(btn) {
+      btn.addEventListener('click', function() { openSong(btn.getAttribute('data-url')); });
+    });
     Array.prototype.forEach.call(container.querySelectorAll('.song-card-remove'), function(btn) {
       btn.addEventListener('click', function() {
         var id = btn.getAttribute('data-id');
@@ -2081,39 +2502,66 @@
       });
     });
   }
-  function show() {
-    document.getElementById('song-title-input').value = '';
-    document.getElementById('song-url-input').value = '';
-    document.getElementById('song-modal').hidden = false;
-    setTimeout(function() {
-      var t = document.getElementById('song-title-input');
-      if (t) t.focus();
-    }, 50);
+  function setStatus(msg, kind) {
+    var el = document.getElementById('song-add-status');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'song-add-inline-status ' + (kind || '');
+    if (kind === 'success') {
+      setTimeout(function(){
+        if (el.textContent === msg) { el.textContent = ''; el.className = 'song-add-inline-status'; }
+      }, 3500);
+    }
   }
-  function hide() {
-    document.getElementById('song-modal').hidden = true;
-  }
-  function save() {
-    var title = document.getElementById('song-title-input').value.trim();
-    var url = document.getElementById('song-url-input').value.trim();
-    if (!title) { alert('Please enter a song title.'); return; }
-    if (!url) { alert('Please paste a Suno URL.'); return; }
-    if (!/^https?:\/\//i.test(url)) { alert('URL must start with http:// or https://'); return; }
+  function addSong() {
+    var titleEl = document.getElementById('song-title-input');
+    var urlEl = document.getElementById('song-url-input');
+    var title = (titleEl.value || '').trim();
+    var url = (urlEl.value || '').trim();
+    if (!title) { setStatus('Please add a song title.', 'error'); titleEl.focus(); return; }
+    if (!url) { setStatus('Please paste the Suno URL.', 'error'); urlEl.focus(); return; }
+    if (!/^https?:\/\//i.test(url)) { setStatus('URL must start with https://', 'error'); urlEl.focus(); return; }
     var songs = getSongs();
     songs.push({ id: Date.now(), title: title, url: url });
-    if (saveSongs(songs)) { hide(); render(); }
-  }
-  function init() {
-    var b = document.getElementById('add-song-btn'); if (b) b.addEventListener('click', show);
-    var c = document.getElementById('song-modal-cancel'); if (c) c.addEventListener('click', hide);
-    var s = document.getElementById('song-modal-save'); if (s) s.addEventListener('click', save);
-    var m = document.getElementById('song-modal');
-    if (m) m.addEventListener('click', function(e) { if (e.target === m) hide(); });
+    if (!saveSongs(songs)) { setStatus('Could not save (storage may be full).', 'error'); return; }
+    titleEl.value = ''; urlEl.value = '';
+    setStatus('✓ Added "' + title + '" to your playlist.', 'success');
     render();
   }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else { init(); }
+  function init() {
+    var btn = document.getElementById('song-add-inline-btn');
+    if (btn) btn.addEventListener('click', addSong);
+    var urlEl = document.getElementById('song-url-input');
+    if (urlEl) {
+      urlEl.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); addSong(); }
+      });
+    }
+    render();
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+
+
+<script>
+(function(){
+  function scrollActiveIntoView() {
+    var active = document.querySelector('nav.tabs .tab-btn.active');
+    if (active && active.scrollIntoView) {
+      try { active.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center'}); }
+      catch(e) {}
+    }
+  }
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.tab-btn')) {
+      setTimeout(scrollActiveIntoView, 50);
+    }
+  });
+  // On load: scroll active tab into view
+  if (document.readyState !== 'loading') scrollActiveIntoView();
+  else document.addEventListener('DOMContentLoaded', scrollActiveIntoView);
 })();
 </script>
 
